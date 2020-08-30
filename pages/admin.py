@@ -33,3 +33,5 @@ admin.site.register(models.BlogPost)
 admin.site.register(models.TeacherPosition)
 
 admin.site.register(models.Teacher)
+
+admin.site.register(models.PricingPlan)

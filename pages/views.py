@@ -58,7 +58,8 @@ def courses(request):
 
 
 def pricing(request):
-    return render(request, 'pages/pricing.html')
+    priceing_plans = models.PricingPlan.objects.all()
+    return render(request, 'pages/pricing.html', {'pricing_plans': priceing_plans})
 
 
 def teacher(request):

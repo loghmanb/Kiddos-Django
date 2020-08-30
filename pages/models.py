@@ -107,3 +107,21 @@ class Teacher(models.Model):
 
     def __str__(self):
         return self.full_name
+
+
+class PricingPlan(models.Model):
+    class Meta:
+        db_table = 'kiddos_pricingplan'
+
+    name = models.CharField(_('Name'), max_length=30, blank=False, null=False)
+    price = models.FloatField(_('Price'), null=False)
+    duration = models.IntegerField(_('Duration'), null=False)
+    short_desc = models.CharField(_('Short Description'), max_length=256,
+                                  blank=False, null=False)
+    image = models.ImageField(verbose_name=_('Image'), upload_to='images/%Y/%m/%d',
+                              null=False)
+    plan_cls = models.CharField(_('Plan Style Class'), max_length=20,
+                                blank=True, null=True)
+
+    def __str__(self):
+        return self.name
