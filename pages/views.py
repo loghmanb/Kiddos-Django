@@ -46,7 +46,8 @@ def blog(request):
 
 
 def blog_single(request, id):
-    return render(request, 'pages/blog-single.html')
+    blog_post = models.BlogPost.objects.get(pk=id)
+    return render(request, 'pages/blog-single.html', {'blog_post': blog_post})
 
 
 def contact(request):
