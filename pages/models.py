@@ -19,7 +19,10 @@
 #
 ##############################################################################
 
+from datetime import datetime
 from django.db import models
+from django.conf import settings
+from django.utils.translation import gettext_lazy as _
 
 
 class Settings(models.Model):
@@ -29,3 +32,40 @@ class Settings(models.Model):
     name = models.CharField('Name', primary_key=True,
                             max_length=32, blank=False, null=False)
     value = models.CharField('Value', max_length=512, blank=True, null=True)
+
+    def __str__(self):
+        return '%s: %s' % (self.name, self.value)
+
+
+class Courses(models.Model):
+    class Meta:
+        db_table = 'kiddos_courses'
+
+    name = models.CharField('Name', max_length=50, blank=False, null=False)
+    class_time = models.CharField('Class Time', max_length=20, blank=False,
+                                  null=False)
+    short_desc = models.CharField('Short Description', max_length=256)
+    active = models.BooleanField('Is Active?!', default=True)
+    image = models.ImageField('Image', upload_to='images/%Y/%m/%d/')
+
+
+class BlogPost(models.Model):
+    class Meta:
+        db_table = 'kiddos_blog_post'
+
+    title = models.CharField('Title', max_length=128, blank=False, null=False)
+    short_desc = models.CharField('Short Description', max_length=256)
+    body = models.TextField('Body')
+    create_date = models.DateTimeField(verbose_name=_('Creation Date'),
+                                       default=datetime.now, blank=True)
+    create_user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='+',
+        blank=True,
+        null=True,
+        verbose_name=_('Created by'),
+    )
+
+    def __str__(self):
+        return self.title
