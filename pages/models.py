@@ -72,7 +72,7 @@ class BlogPost(models.Model):
     )
 
     def __str__(self):
-        return '%s [writter by %s]' % (self.title, self.create_user)
+        return '%s [written by %s]' % (self.title, self.create_user)
 
 
 class TeacherPosition(models.Model):

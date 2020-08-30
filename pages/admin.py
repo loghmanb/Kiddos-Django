@@ -24,14 +24,49 @@ from django.contrib import admin
 from . import models
 
 
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'short_desc', 'create_user', 'create_date',)
+    list_display_links = ('id', 'title',)
+    list_filter = ('create_user',)
+    search_fields = ('id', 'title', 'short_desc', 'create_user__username',
+                     'create_user__first_name__icontains',
+                     'create_user__last_name__icontains')
+    list_per_page = 25
+
+
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'class_time', 'active')
+    list_display_links = ('id', 'name',)
+    list_filter = ('active',)
+    list_editable = ('active',)
+    search_fields = ('name',)
+    list_per_page = 25
+
+
+class TeacherAdmin(admin.ModelAdmin):
+    list_display = ('id', 'full_name', 'position', 'is_published')
+    list_display_links = ('id', 'full_name')
+    list_filter = ('position', 'is_published')
+    list_editable = ('position', 'is_published',)
+    search_fields = ('full_name',)
+    list_per_page = 25
+
+
+class PricingPlanAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'price', 'duration')
+    list_display_links = ('id', 'name',)
+    search_fields = ('name',)
+    list_per_page = 25
+
+
 admin.site.register(models.Setting)
 
-admin.site.register(models.Course)
+admin.site.register(models.BlogPost, BlogPostAdmin)
 
-admin.site.register(models.BlogPost)
+admin.site.register(models.Course, CourseAdmin)
 
 admin.site.register(models.TeacherPosition)
 
-admin.site.register(models.Teacher)
+admin.site.register(models.Teacher, TeacherAdmin)
 
-admin.site.register(models.PricingPlan)
+admin.site.register(models.PricingPlan, PricingPlanAdmin)
