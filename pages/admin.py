@@ -25,10 +25,10 @@ from . import models
 
 
 class BlogPostAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'short_desc', 'tags',
+    list_display = ('id', 'title', 'short_desc', 'tags', 'is_published',
                     'create_user', 'create_date',)
     list_display_links = ('id', 'title',)
-    list_filter = ('create_user',)
+    list_filter = ('create_user', 'is_published',)
     search_fields = ('id', 'title', 'short_desc', 'create_user__username',
                      'create_user__first_name__icontains',
                      'create_user__last_name__icontains')

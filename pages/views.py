@@ -44,7 +44,8 @@ def about(request):
 
 
 def blog(request):
-    blog_posts = models.BlogPost.objects.all()
+    blog_posts = models.BlogPost.objects.filter(
+        is_published=True).order_by('-create_date')
     paginator = Paginator(blog_posts, NO_PER_PAGE)
     page = int(request.GET.get('page', 1))
     pages = range(max(1, page-2), min(page+2, paginator.num_pages)+1)

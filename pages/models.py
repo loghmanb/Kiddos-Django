@@ -62,6 +62,7 @@ class BlogPost(models.Model):
     tags = models.CharField(_('Tags'), max_length=128,
                             blank=True, null=False, default='')
     image = models.ImageField('Image', upload_to='images/%Y/%m/%d/')
+    is_published = models.BooleanField(_('Is published!'), default=True)
     create_date = models.DateTimeField(verbose_name=_('Creation Date'),
                                        default=datetime.now, blank=True)
     create_user = models.ForeignKey(
