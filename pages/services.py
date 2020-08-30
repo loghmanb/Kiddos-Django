@@ -27,6 +27,11 @@ def get_website_settings():
     data = {
         SETTINGS_PHONE_NO: '+ 123 456 789',
         SETTINGS_EMAIL: 'youremail@email.com',
-        SETTINGS_ADDRESS: '1234 Fake Street st., My City, My State'
+        SETTINGS_ADDRESS: '1234 Fake Street st., My City, My State',
+        SETTINGS_TWITTER: 'my_twitter_account',
+        SETTINGS_INSTAGRAM: 'my_instagram_account',
+        SETTINGS_FACEBOOK: 'my_facebook_account',
     }
+    data.update({setting.name: setting.value
+                 for setting in models.Settings.objects.all()})
     return data

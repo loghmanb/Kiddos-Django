@@ -52,7 +52,7 @@ def contact(request):
 
 
 def courses(request):
-    return render(request, 'pages/courses.html')
+    return render(request, 'pages/courses.html', {'courses': []})
 
 
 def pricing(request):

@@ -22,3 +22,6 @@
 SETTINGS_PHONE_NO = 'settings_phone_no'
 SETTINGS_EMAIL = 'settings_email'
 SETTINGS_ADDRESS = 'settings_address'
+SETTINGS_TWITTER = 'settings_twitter'
+SETTINGS_INSTAGRAM = 'settings_instagram'
+SETTINGS_FACEBOOK = 'settings_facebook'
