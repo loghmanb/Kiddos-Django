@@ -41,7 +41,8 @@ def about(request):
 
 
 def blog(request):
-    return render(request, 'pages/blog.html')
+    blog_posts = models.BlogPost.objects.all()
+    return render(request, 'pages/blog.html', {'blog_posts': blog_posts})
 
 
 def blog_single(request, id):
