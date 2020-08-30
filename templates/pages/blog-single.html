@@ -24,6 +24,7 @@
             <div class="col-lg-8 ftco-animate">
                 <h2 class="mb-3">{{ blog_post.title }}</h2>
                 <p>{{ blog_post.body|safe }}</p>
+                {% if blog_post.tags %}
                 <div class="tag-widget post-tag-container mb-5 mt-5">
                     <div class="tagcloud">
                         {% for tag in blog_post.tag_list %}
@@ -31,7 +32,7 @@
                         {% endfor %}
                     </div>
                 </div>
-
+                {% endif %}
                 <div class="about-author d-flex p-4 bg-light">
                     <div class="bio mr-5">
                         <img src="images/teacher-1.jpg" alt="Image placeholder" class="img-fluid mb-4">

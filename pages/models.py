@@ -75,7 +75,7 @@ class BlogPost(models.Model):
 
     @property
     def tag_list(self):
-        return self.tags.split('|')
+        return self.tags and self.tags.split('|') or []
 
     def __str__(self):
         return '%s [written by %s]' % (self.title, self.create_user)
