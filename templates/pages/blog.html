@@ -35,7 +35,8 @@
                         <h3 class="heading"><a href="#">{{ blog_post.title }}</a></h3>
                         <p>{{ blog_post.short_desc }}</p>
                         <div class="d-flex align-items-center mt-4">
-                            <p class="mb-0"><a href="{% url 'blog-single' blog_post.id %}" class="btn btn-secondary">Read More <span
+                            <p class="mb-0"><a href="{% url 'blog-single' blog_post.id %}"
+                                    class="btn btn-secondary">Read More <span
                                         class="ion-ios-arrow-round-forward"></span></a></p>
                             <p class="ml-auto mb-0">
                                 <a href="#" class="mr-2">{{ blog_post.create_user }}</a>
@@ -46,18 +47,26 @@
                 </div>
             </div>
             {% endfor %}
-            {% if pagination %}
+            {% if num_pages > 1 %}
             <div class="row no-gutters my-5">
                 <div class="col text-center">
                     <div class="block-27">
                         <ul>
-                            <li><a href="#"><i class="ion-ios-arrow-back"></i></a></li>
-                            <li class="active"><span>1</span></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#"><i class="ion-ios-arrow-forward"></i></a></li>
+                            {% if page > 1 %}
+                            <li><a href="?page{{ blog_posts.previous_page_number }}"><i
+                                        class="ion-ios-arrow-back"></i></a></li>
+                            {% endif %}
+                            {% for page in pages %}
+                            {% if page == page_no %}
+                            <li class="active"><span>{{ page }}</span></li>
+                            {% else %}
+                            <li><a href="?page={{ page }}">2</a></li>
+                            {% endif %}
+                            {% endfor %}
+                            {% if page < num_pages %}
+                            <li><a href="?page={{ blog_posts.next_page_number }}"><i
+                                        class="ion-ios-arrow-forward"></i></a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>

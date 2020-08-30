@@ -20,9 +20,12 @@
 ##############################################################################
 
 from django.shortcuts import render as _render
+from django.core.paginator import Paginator
 
 from . import models
 from . import services
+
+NO_PER_PAGE = 1
 
 
 def render(request, template, data=None):
@@ -42,7 +45,15 @@ def about(request):
 
 def blog(request):
     blog_posts = models.BlogPost.objects.all()
-    return render(request, 'pages/blog.html', {'blog_posts': blog_posts})
+    paginator = Paginator(blog_posts, NO_PER_PAGE)
+    page = int(request.GET.get('page', 1))
+    pages = range(max(1, page-2), min(page+2, paginator.num_pages)+1)
+    return render(request, 'pages/blog.html',
+                  {'blog_posts': paginator.get_page(page),
+                   'count': paginator.count,
+                   'page_no': page,
+                   'pages': pages,
+                   'num_pages': paginator.num_pages, })
 
 
 def blog_single(request, id):
