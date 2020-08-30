@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% block content %}
 <section class="hero-wrap hero-wrap-2" style="background-image: url('{% static 'images/bg_2.jpg' %}');">
     <div class="overlay"></div>
@@ -24,7 +25,7 @@
                 <div class="pricing-entry bg-light pb-4 text-center">
                     <div>
                         <h3 class="mb-3">{{ plan.name }}</h3>
-                        <p><span class="price">${{ plan.price }}</span> <span class="per">/ {{ plan.duration }}mos</span></p>
+                        <p><span class="price">${{ plan.price|floatformat:2|intcomma }}</span> <span class="per">/ {{ plan.duration }}mos</span></p>
                     </div>
                     <div class="img" style="background-image: url('{{ plan.image.url }}');"></div>
                     <div class="px-4">
