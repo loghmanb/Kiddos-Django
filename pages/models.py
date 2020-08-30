@@ -110,7 +110,10 @@ class Teacher(models.Model):
                                   blank=True, null=True)
     instagram = models.CharField(_('Instagram Account'), max_length=30,
                                  blank=True, null=True)
-    is_published = models.BooleanField(_('Is published!'), default=True)
+    is_published = models.BooleanField(_('Is published!'),
+                                       default=True, null=False)
+    publish_on_index = models.BooleanField(_('Is published on index page?!'),
+                                           default=True, null=False)
 
     def __str__(self):
         return self.full_name
@@ -132,3 +135,17 @@ class PricingPlan(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Endorsement(models.Model):
+    class Meta:
+        db_table = 'kiddos_endorsement'
+
+    person = models.CharField(_('Person'), max_length=50,
+                              blank=False, null=False)
+    role = models.CharField(_('Role'), max_length=20, blank=False, null=False)
+    note = models.TextField(_('Note'), blank=False, null=False)
+    is_published = models.BooleanField(_('Is published'),
+                                       default=True, null=False)
+    photo = models.ImageField(_('Photo'), upload_to='photos/%Y/%m/%d',
+                              null=True)

@@ -45,10 +45,11 @@ class CourseAdmin(admin.ModelAdmin):
 
 
 class TeacherAdmin(admin.ModelAdmin):
-    list_display = ('id', 'full_name', 'position', 'is_published')
+    list_display = ('id', 'full_name', 'position',
+                    'is_published', 'publish_on_index', )
     list_display_links = ('id', 'full_name')
-    list_filter = ('position', 'is_published')
-    list_editable = ('position', 'is_published',)
+    list_filter = ('position', 'is_published', 'publish_on_index', )
+    list_editable = ('position', 'is_published', 'publish_on_index', )
     search_fields = ('full_name',)
     list_per_page = 25
 
@@ -57,6 +58,13 @@ class PricingPlanAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'price', 'duration')
     list_display_links = ('id', 'name',)
     search_fields = ('name',)
+    list_per_page = 25
+
+
+class EndorsementAdmin(admin.ModelAdmin):
+    list_display = ('id', 'person', 'is_published')
+    list_display_links = ('id', 'person',)
+    search_fields = ('person',)
     list_per_page = 25
 
 
@@ -71,3 +79,5 @@ admin.site.register(models.TeacherPosition)
 admin.site.register(models.Teacher, TeacherAdmin)
 
 admin.site.register(models.PricingPlan, PricingPlanAdmin)
+
+admin.site.register(models.Endorsement, EndorsementAdmin)

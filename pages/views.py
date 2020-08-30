@@ -36,7 +36,10 @@ def render(request, template, data=None):
 
 
 def index(request):
-    return render(request, 'pages/index.html')
+    endorsements = models.Endorsement.objects.filter(is_published=True)
+    return render(request, 'pages/index.html', {
+        'endorsements': endorsements,
+    })
 
 
 def about(request):
