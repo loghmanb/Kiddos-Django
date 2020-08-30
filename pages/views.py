@@ -25,7 +25,7 @@ from django.core.paginator import Paginator
 from . import models
 from . import services
 
-NO_PER_PAGE = 1
+NO_PER_PAGE = 6
 
 
 def render(request, template, data=None):

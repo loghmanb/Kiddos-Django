@@ -52,7 +52,7 @@
                 <div class="col text-center">
                     <div class="block-27">
                         <ul>
-                            {% if page > 1 %}
+                            {% if page_no > 1 %}
                             <li><a href="?page{{ blog_posts.previous_page_number }}"><i
                                         class="ion-ios-arrow-back"></i></a></li>
                             {% endif %}
@@ -60,10 +60,10 @@
                             {% if page == page_no %}
                             <li class="active"><span>{{ page }}</span></li>
                             {% else %}
-                            <li><a href="?page={{ page }}">2</a></li>
+                            <li><a href="?page={{ page }}">{{ page }}</a></li>
                             {% endif %}
                             {% endfor %}
-                            {% if page < num_pages %}
+                            {% if page_no < num_pages %}
                             <li><a href="?page={{ blog_posts.next_page_number }}"><i
                                         class="ion-ios-arrow-forward"></i></a></li>
                             {% endif %}
