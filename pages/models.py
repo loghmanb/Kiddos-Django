@@ -95,6 +95,14 @@ class Teacher(models.Model):
     short_desc = models.CharField(_('Short Description'), max_length=256)
     photo = models.ImageField(verbose_name=_('Photo'), upload_to='photos/%Y/%m/%d/',
                               null=True, blank=True)
+    twitter = models.CharField(_('Twitter Account'), max_length=30,
+                               blank=True, null=True)
+    facebook = models.CharField(_('Facebook Account'), max_length=30,
+                                blank=True, null=True)
+    googleplus = models.CharField(_('Google+ Account'), max_length=30,
+                                  blank=True, null=True)
+    instagram = models.CharField(_('Instagram Account'), max_length=30,
+                                 blank=True, null=True)
     is_published = models.BooleanField(_('Is published!'), default=True)
 
     def __str__(self):
