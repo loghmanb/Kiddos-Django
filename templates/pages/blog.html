@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% block content %}
 <section class="hero-wrap hero-wrap-2" style="background-image: url('{% static 'images/bg_2.jpg' %}');">
     <div class="overlay"></div>
@@ -25,9 +26,9 @@
                     <a href="{% url 'blog-single' blog_post.id %}" class="block-20 d-flex align-items-end"
                         style="background-image: url('{{ blog_post.image.url }}');">
                         <div class="meta-date text-center p-2">
-                            <span class="day">27</span>
-                            <span class="mos">January</span>
-                            <span class="yr">2019</span>
+                            <span class="day">{{ blog_post.create_date|date:"d" }}</span>
+                            <span class="mos">{{ blog_post.create_date|date:"F" }}</span>
+                            <span class="yr">{{ blog_post.create_date|date:"Y" }}</span>
                         </div>
                     </a>
                     <div class="text bg-white p-4">
