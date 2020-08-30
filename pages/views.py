@@ -39,9 +39,11 @@ def index(request):
     endorsements = models.Endorsement.objects.filter(is_published=True)
     recent_blog_posts = models.BlogPost.objects.filter(
         is_published=True).order_by('-create_date')[:3]
+    teachers = models.Teacher.objects.filter(publish_on_index=True)
     return render(request, 'pages/index.html', {
         'endorsements': endorsements,
-        'recent_blog_posts': recent_blog_posts
+        'recent_blog_posts': recent_blog_posts,
+        'teachers': teachers,
     })
 
 
