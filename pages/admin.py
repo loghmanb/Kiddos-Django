@@ -25,7 +25,8 @@ from . import models
 
 
 class BlogPostAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'short_desc', 'create_user', 'create_date',)
+    list_display = ('id', 'title', 'short_desc', 'tags',
+                    'create_user', 'create_date',)
     list_display_links = ('id', 'title',)
     list_filter = ('create_user',)
     search_fields = ('id', 'title', 'short_desc', 'create_user__username',

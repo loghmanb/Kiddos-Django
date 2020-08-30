@@ -59,6 +59,8 @@ class BlogPost(models.Model):
     title = models.CharField('Title', max_length=128, blank=False, null=False)
     short_desc = models.CharField('Short Description', max_length=256)
     body = models.TextField('Body')
+    tags = models.CharField(_('Tags'), max_length=128,
+                            blank=True, null=False, default='')
     image = models.ImageField('Image', upload_to='images/%Y/%m/%d/')
     create_date = models.DateTimeField(verbose_name=_('Creation Date'),
                                        default=datetime.now, blank=True)
@@ -70,6 +72,10 @@ class BlogPost(models.Model):
         null=True,
         verbose_name=_('Created by'),
     )
+
+    @property
+    def tag_list(self):
+        return self.tags.split('|')
 
     def __str__(self):
         return '%s [written by %s]' % (self.title, self.create_user)
