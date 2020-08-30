@@ -21,6 +21,7 @@
 
 from django.shortcuts import render as _render
 
+from . import models
 from . import services
 
 
@@ -52,7 +53,8 @@ def contact(request):
 
 
 def courses(request):
-    return render(request, 'pages/courses.html', {'courses': []})
+    courses = models.Course.objects.all()
+    return render(request, 'pages/courses.html', {'courses': courses})
 
 
 def pricing(request):

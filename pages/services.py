@@ -33,5 +33,5 @@ def get_website_settings():
         SETTINGS_FACEBOOK: 'my_facebook_account',
     }
     data.update({setting.name: setting.value
-                 for setting in models.Settings.objects.all()})
+                 for setting in models.Setting.objects.all()})
     return data

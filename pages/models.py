@@ -25,7 +25,7 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 
-class Settings(models.Model):
+class Setting(models.Model):
     class Meta:
         db_table = 'kiddos_settings'
 
@@ -37,7 +37,7 @@ class Settings(models.Model):
         return '%s: %s' % (self.name, self.value)
 
 
-class Courses(models.Model):
+class Course(models.Model):
     class Meta:
         db_table = 'kiddos_courses'
 
@@ -47,6 +47,9 @@ class Courses(models.Model):
     short_desc = models.CharField('Short Description', max_length=256)
     active = models.BooleanField('Is Active?!', default=True)
     image = models.ImageField('Image', upload_to='images/%Y/%m/%d/')
+
+    def __str__(self):
+        return '%s [%s]' % (self.name, self.class_time)
 
 
 class BlogPost(models.Model):
