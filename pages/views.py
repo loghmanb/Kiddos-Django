@@ -46,7 +46,7 @@ def blog(request):
 
 
 def blog_single(request, id):
-    return render(request, 'pages/blog_single.html')
+    return render(request, 'pages/blog-single.html')
 
 
 def contact(request):

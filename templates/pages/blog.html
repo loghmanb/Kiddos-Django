@@ -34,7 +34,7 @@
                         <h3 class="heading"><a href="#">{{ blog_post.title }}</a></h3>
                         <p>{{ blog_post.short_desc }}</p>
                         <div class="d-flex align-items-center mt-4">
-                            <p class="mb-0"><a href="#" class="btn btn-secondary">Read More <span
+                            <p class="mb-0"><a href="{% url 'blog-single' blog_post.id %}" class="btn btn-secondary">Read More <span
                                         class="ion-ios-arrow-round-forward"></span></a></p>
                             <p class="ml-auto mb-0">
                                 <a href="#" class="mr-2">{{ blog_post.create_user }}</a>
