@@ -73,3 +73,29 @@ class BlogPost(models.Model):
 
     def __str__(self):
         return '%s [writter by %s]' % (self.title, self.create_user)
+
+
+class TeacherPosition(models.Model):
+    class Meta:
+        db_table = 'kiddos_teacher_position'
+
+    name = models.CharField(_('Name'), max_length=50, blank=False, null=False)
+
+    def __str__(self):
+        return self.name
+
+
+class Teacher(models.Model):
+    class Meta:
+        db_table = 'kiddos_teacher'
+
+    full_name = models.CharField(_('Full Name'), max_length=60)
+    position = models.ForeignKey(TeacherPosition, on_delete=models.DO_NOTHING,
+                                 related_name='+', verbose_name=_('Position'))
+    short_desc = models.CharField(_('Short Description'), max_length=256)
+    photo = models.ImageField(verbose_name=_('Photo'), upload_to='photos/%Y/%m/%d/',
+                              null=True, blank=True)
+    is_published = models.BooleanField(_('Is published!'), default=True)
+
+    def __str__(self):
+        return self.full_name

@@ -62,4 +62,5 @@ def pricing(request):
 
 
 def teacher(request):
-    return render(request, 'pages/teacher.html')
+    teachers = models.Teacher.objects.filter(is_published=True)
+    return render(request, 'pages/teacher.html', {'teachers': teachers})

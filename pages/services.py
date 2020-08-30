@@ -31,6 +31,7 @@ def get_website_settings():
         SETTINGS_TWITTER: 'my_twitter_account',
         SETTINGS_INSTAGRAM: 'my_instagram_account',
         SETTINGS_FACEBOOK: 'my_facebook_account',
+        SETTINGS_WEBSITE: 'yoursite.com',
     }
     data.update({setting.name: setting.value
                  for setting in models.Setting.objects.all()})

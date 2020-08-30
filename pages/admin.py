@@ -29,3 +29,7 @@ admin.site.register(models.Setting)
 admin.site.register(models.Course)
 
 admin.site.register(models.BlogPost)
+
+admin.site.register(models.TeacherPosition)
+
+admin.site.register(models.Teacher)
