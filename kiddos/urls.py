@@ -28,3 +28,7 @@ urlpatterns = [
     path('', include('pages.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+admin.site.site_header = "Kiddos-Django Admin"
+admin.site.site_title = "Kiddos-Django Admin Portal"
+admin.site.index_title = "Welcome to Kiddos-Django Portal"
