@@ -32,7 +32,9 @@
                         </div>
                     </a>
                     <div class="text bg-white p-4">
-                        <h3 class="heading"><a href="#">{{ blog_post.title }}</a></h3>
+                        <h3 class="heading">
+                            <a href="{% url 'blog-single' blog_post.id %}">{{ blog_post.title }}</a>
+                        </h3>
                         <p>{{ blog_post.short_desc }}</p>
                         <div class="d-flex align-items-center mt-4">
                             <p class="mb-0"><a href="{% url 'blog-single' blog_post.id %}"
