@@ -34,4 +34,6 @@ def get_website_settings():
     }
     data.update({setting.name: setting.value
                  for setting in models.Setting.objects.all()})
+    data['latest_blog_posts'] = models.BlogPost.objects.order_by(
+        '-create_date')[:2]
     return data

@@ -59,6 +59,7 @@ class BlogPost(models.Model):
     title = models.CharField('Title', max_length=128, blank=False, null=False)
     short_desc = models.CharField('Short Description', max_length=256)
     body = models.TextField('Body')
+    image = models.ImageField('Image', upload_to='images/%Y/%m/%d/')
     create_date = models.DateTimeField(verbose_name=_('Creation Date'),
                                        default=datetime.now, blank=True)
     create_user = models.ForeignKey(
@@ -71,4 +72,4 @@ class BlogPost(models.Model):
     )
 
     def __str__(self):
-        return self.title
+        return '%s [writter by %s]' % (self.title, self.create_user)
