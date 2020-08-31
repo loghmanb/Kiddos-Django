@@ -162,3 +162,18 @@ class Gallery(models.Model):
                                        default=True, null=False)
     create_date = models.DateTimeField(_('Create Date'),
                                        default=datetime.now, null=False)
+
+
+class Page(models.Model):
+    class Meta:
+        db_table = 'kiddos_page'
+
+    name = models.CharField(_('Name'), max_length=256, null=False, blank=False)
+    short_desc = models.CharField(_('Short Description'), max_length=512,
+                                  null=False, blank=False)
+    body = models.TextField(_('Body'))
+    publish_on_index = models.BooleanField(_('Publish on Index page'),
+                                           default=False, null=False)
+    is_published = models.BooleanField(_('Is Published'),
+                                       default=False, null=False)
+    image = models.ImageField(_('Image'), upload_to='images/%Y/%m/%d/')

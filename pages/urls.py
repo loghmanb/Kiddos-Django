@@ -28,6 +28,7 @@ urlpatterns = [
     path('about', views.about, name='about'),
     path('blog', views.blog, name='blog'),
     path('blog/<int:id>', views.blog_single, name='blog-single'),
+    path('page/<int:id>', views.page, name='page'),
     path('contact', views.contact, name='contact'),
     path('courses', views.courses, name='courses'),
     path('pricing', views.pricing, name='pricing'),

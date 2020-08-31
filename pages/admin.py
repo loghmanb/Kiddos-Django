@@ -75,6 +75,14 @@ class GalleryAdmin(admin.ModelAdmin):
     list_per_page = 25
 
 
+class PageAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'publish_on_index')
+    list_display_links = ('id', 'name')
+    search_fields = ('name',)
+    list_filter = ('publish_on_index',)
+    list_per_page = 25
+
+
 admin.site.register(models.Setting)
 
 admin.site.register(models.BlogPost, BlogPostAdmin)
@@ -90,3 +98,5 @@ admin.site.register(models.PricingPlan, PricingPlanAdmin)
 admin.site.register(models.Endorsement, EndorsementAdmin)
 
 admin.site.register(models.Gallery, GalleryAdmin)
+
+admin.site.register(models.Page, PageAdmin)

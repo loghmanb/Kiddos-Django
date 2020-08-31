@@ -36,6 +36,8 @@ def render(request, template, data=None):
 
 
 def index(request):
+    fast_links = models.Page.objects.filter(publish_on_index=True,
+                                            is_published=True)
     endorsements = models.Endorsement.objects.filter(is_published=True)
     recent_blog_posts = models.BlogPost.objects.filter(
         is_published=True).order_by('-create_date')[:3]
@@ -45,6 +47,7 @@ def index(request):
     gallery = models.Gallery.objects.filter(is_published=True
                                             ).order_by('-create_date')
     return render(request, 'pages/index.html', {
+        'fast_links': fast_links,
         'endorsements': endorsements,
         'recent_blog_posts': recent_blog_posts,
         'courses': courses,
@@ -95,3 +98,8 @@ def pricing(request):
 def teacher(request):
     teachers = models.Teacher.objects.filter(is_published=True)
     return render(request, 'pages/teacher.html', {'teachers': teachers})
+
+
+def page(request, id):
+    page = models.Page.objects.get(pk=id)
+    return render(request, 'pages/page.html', {'page': page})
