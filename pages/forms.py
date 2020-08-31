@@ -27,3 +27,21 @@ class RequestQuoteForm(forms.Form):
     last_name = forms.CharField()
     phone = forms.CharField()
     message = forms.Textarea(required=False)
+
+
+class MessageForm(forms.Form):
+    name = forms.CharField()
+    email = forms.EmailField()
+    subject = forms.CharField()
+    message = forms.Textarea()
+
+
+class SubscriptionForm(forms.Form):
+    email = forms.EmailField()
+
+
+class PostReplyForm(forms.Form):
+    name = forms.CharField()
+    email = forms.EmailField()
+    website = forms.URLField(required=False)
+    message = forms.Textarea()
