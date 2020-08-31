@@ -24,6 +24,13 @@ from django.contrib import admin
 from . import models
 
 
+class SettingAdmin(admin.ModelAdmin):
+    list_display = ('name', 'value')
+    list_display_links = ('name', 'value',)
+    search_fields = ('name',)
+    list_per_page = 25
+
+
 class BlogPostAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'short_desc', 'tags', 'is_published',
                     'create_user', 'create_date',)
@@ -83,7 +90,7 @@ class PageAdmin(admin.ModelAdmin):
     list_per_page = 25
 
 
-admin.site.register(models.Setting)
+admin.site.register(models.Setting, SettingAdmin)
 
 admin.site.register(models.BlogPost, BlogPostAdmin)
 
