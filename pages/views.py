@@ -39,13 +39,17 @@ def index(request):
     endorsements = models.Endorsement.objects.filter(is_published=True)
     recent_blog_posts = models.BlogPost.objects.filter(
         is_published=True).order_by('-create_date')[:3]
+    courses = models.Course.objects.filter(active=True)[:4]
     teachers = models.Teacher.objects.filter(publish_on_index=True)
+    pricing_plans = models.PricingPlan.objects.all()
     gallery = models.Gallery.objects.filter(is_published=True
                                             ).order_by('-create_date')
     return render(request, 'pages/index.html', {
         'endorsements': endorsements,
         'recent_blog_posts': recent_blog_posts,
+        'courses': courses,
         'teachers': teachers,
+        'pricing_plans': pricing_plans,
         'gallery': gallery,
     })
 
@@ -78,14 +82,14 @@ def contact(request):
 
 
 def courses(request):
-    courses = models.Course.objects.all()
+    courses = models.Course.objects.filter(active=True)
     return render(request, 'pages/courses.html', {'courses': courses})
 
 
 def pricing(request):
-    priceing_plans = models.PricingPlan.objects.all()
+    pricing_plans = models.PricingPlan.objects.all()
     return render(request, 'pages/pricing.html',
-                  {'pricing_plans': priceing_plans})
+                  {'pricing_plans': pricing_plans})
 
 
 def teacher(request):
