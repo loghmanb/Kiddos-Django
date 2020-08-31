@@ -128,7 +128,7 @@ class PricingPlan(models.Model):
     duration = models.IntegerField(_('Duration'), null=False)
     short_desc = models.CharField(_('Short Description'), max_length=256,
                                   blank=False, null=False)
-    image = models.ImageField(verbose_name=_('Image'), upload_to='images/%Y/%m/%d',
+    image = models.ImageField(verbose_name=_('Image'), upload_to='images/%Y/%m/%d/',
                               null=False)
     plan_cls = models.CharField(_('Plan Style Class'), max_length=20,
                                 blank=True, null=True)
@@ -149,3 +149,16 @@ class Endorsement(models.Model):
                                        default=True, null=False)
     photo = models.ImageField(_('Photo'), upload_to='photos/%Y/%m/%d',
                               null=True)
+
+
+class Gallery(models.Model):
+    class Meta:
+        db_table = 'kiddos_gallery'
+
+    name = models.CharField(_('Name'), max_length=50, blank=False, null=False)
+    photo = models.ImageField(
+        _('Photo'), upload_to='photo/gallery/', null=False)
+    is_published = models.BooleanField(_('Is Published!'),
+                                       default=True, null=False)
+    create_date = models.DateTimeField(_('Create Date'),
+                                       default=datetime.now, null=False)

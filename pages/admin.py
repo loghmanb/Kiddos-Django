@@ -68,6 +68,13 @@ class EndorsementAdmin(admin.ModelAdmin):
     list_per_page = 25
 
 
+class GalleryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'photo', 'is_published')
+    list_display_links = ('id', 'name')
+    search_fields = ('name',)
+    list_per_page = 25
+
+
 admin.site.register(models.Setting)
 
 admin.site.register(models.BlogPost, BlogPostAdmin)
@@ -81,3 +88,5 @@ admin.site.register(models.Teacher, TeacherAdmin)
 admin.site.register(models.PricingPlan, PricingPlanAdmin)
 
 admin.site.register(models.Endorsement, EndorsementAdmin)
+
+admin.site.register(models.Gallery, GalleryAdmin)
