@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% load static %} {% load humanize %}
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
 {% block content %}
 <section class="home-slider owl-carousel">
   <div class="slider-item" style="background-image: url('{% static 'images/bg_1.jpg' %}')">
@@ -42,10 +44,7 @@
           </div>
           <div class="media-body p-2 mt-3">
             <h3 class="heading">Certified Teachers</h3>
-            <p>
-              Even the all-powerful Pointing has no control about the blind
-              texts it is an almost unorthographic.
-            </p>
+            <p>{{ settings_certified_teacher_text }}</p>
           </div>
         </div>
       </div>
@@ -56,10 +55,7 @@
           </div>
           <div class="media-body p-2 mt-3">
             <h3 class="heading">Special Education</h3>
-            <p>
-              Even the all-powerful Pointing has no control about the blind
-              texts it is an almost unorthographic.
-            </p>
+            <p>{{ settings_special_education_text }}</p>
           </div>
         </div>
       </div>
@@ -70,10 +66,7 @@
           </div>
           <div class="media-body p-2 mt-3">
             <h3 class="heading">Book &amp; Library</h3>
-            <p>
-              Even the all-powerful Pointing has no control about the blind
-              texts it is an almost unorthographic.
-            </p>
+            <p>{{ settings_book_library_text }}</p>
           </div>
         </div>
       </div>
@@ -84,10 +77,7 @@
           </div>
           <div class="media-body p-2 mt-3">
             <h3 class="heading">Certification</h3>
-            <p>
-              Even the all-powerful Pointing has no control about the blind
-              texts it is an almost unorthographic.
-            </p>
+            <p>{{ settings_certification_text }}</p>
           </div>
         </div>
       </div>
@@ -116,100 +106,7 @@
           <p><a href="#" class="btn btn-secondary px-4 py-3">Read More</a></p>
         </div>
       </div>
-      <div class="col-md-7 wrap-about py-5 pr-md-4 ftco-animate">
-        <h2 class="mb-4">What We Offer</h2>
-        <p>
-          On her way she met a copy. The copy warned the Little Blind Text, that
-          where it came from it would have been rewritten a thousand times and
-          everything that was left from its origin would be the word.
-        </p>
-        <div class="row mt-5">
-          <div class="col-lg-6">
-            <div class="services-2 d-flex">
-              <div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center">
-                <span class="flaticon-security"></span>
-              </div>
-              <div class="text">
-                <h3>Safety First</h3>
-                <p>
-                  Far far away, behind the word mountains, far from the
-                  countries Vokalia.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="services-2 d-flex">
-              <div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center">
-                <span class="flaticon-reading"></span>
-              </div>
-              <div class="text">
-                <h3>Regular Classes</h3>
-                <p>
-                  Far far away, behind the word mountains, far from the
-                  countries Vokalia.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="services-2 d-flex">
-              <div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center">
-                <span class="flaticon-diploma"></span>
-              </div>
-              <div class="text">
-                <h3>Certified Teachers</h3>
-                <p>
-                  Far far away, behind the word mountains, far from the
-                  countries Vokalia.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="services-2 d-flex">
-              <div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center">
-                <span class="flaticon-education"></span>
-              </div>
-              <div class="text">
-                <h3>Sufficient Classrooms</h3>
-                <p>
-                  Far far away, behind the word mountains, far from the
-                  countries Vokalia.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="services-2 d-flex">
-              <div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center">
-                <span class="flaticon-jigsaw"></span>
-              </div>
-              <div class="text">
-                <h3>Creative Lessons</h3>
-                <p>
-                  Far far away, behind the word mountains, far from the
-                  countries Vokalia.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="services-2 d-flex">
-              <div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center">
-                <span class="flaticon-kids"></span>
-              </div>
-              <div class="text">
-                <h3>Sports Facilities</h3>
-                <p>
-                  Far far away, behind the word mountains, far from the
-                  countries Vokalia.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="col-md-7 wrap-about py-5 pr-md-4 ftco-animate">{{ settings_about_page | safe }}</div>
     </div>
   </div>
 </section>
@@ -279,8 +176,7 @@
     </div>
   </div>
 </section>
-{% endif %}
-{% if courses %}
+{% endif %} {% if courses %}
 <section class="ftco-section">
   <div class="container">
     <div class="row justify-content-center mb-5 pb-2">
@@ -295,7 +191,9 @@
         <div class="img" style="background-image: url('{{ course.image.url }}')"></div>
         <div class="text bg-light p-4">
           <h3><a href="{% url 'courses' %}">{{ course.name }}</a></h3>
-          <p class="subheading"><span>Class time:</span> {{ course.class_time }}</p>
+          <p class="subheading">
+            <span>Class time:</span> {{ course.class_time }}
+          </p>
           <p>{{ course.short_desc }}</p>
         </div>
       </div>
@@ -310,7 +208,9 @@
   <div class="container">
     <div class="row justify-content-center mb-5 pb-2">
       <div class="col-md-8 text-center heading-section heading-section-black ftco-animate">
-        <h2 class="mb-4"><span>{{ settings_no_of_experiences }} Years of</span> Experience</h2>
+        <h2 class="mb-4">
+          <span>{{ settings_no_of_experiences }} Years of</span> Experience
+        </h2>
         <p>{{ settings_experiences_message }}</p>
       </div>
     </div>

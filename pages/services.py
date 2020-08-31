@@ -36,12 +36,17 @@ def get_website_settings():
         SETTINGS_ENDORSEMENT_SECTION_TEXT: '',
         SETTINGS_PRICING_SECTION_TEXT: '',
         SETTINGS_CERTIFIEF_TEACHER_COUNT: 0,
+        SETTINGS_CERTIFIEF_TEACHER_TEXT: '',
+        SETTINGS_SPECIAL_EDUCATION_TEXT: '',
+        SETTINGS_BOOK_LIBRARY_TEXT: '',
+        SETTING_CERTIFICATION_TEXT: '',
         SETTINGS_SUCCESSFUL_KIDS: 0,
         SETTINGS_AWARDS_WON: 0,
         SETTINGS_NO_OF_EXCPERIENCES: 0,
         SETTINGS_EXCPERIENCES_MESSAGE: '',
         SETTINGS_OUR_COURSES_TEXT: '',
         SETTINGS_TEACHING_YOUR_CHILD: '',
+        SETTINGS_ABOUT_PAGE: '',
     }
     data.update({setting.name: setting.value
                  for setting in models.Setting.objects.all()})

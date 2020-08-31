@@ -31,7 +31,7 @@ class Setting(models.Model):
 
     name = models.CharField('Name', primary_key=True,
                             max_length=50, blank=False, null=False)
-    value = models.CharField('Value', max_length=512, blank=True, null=True)
+    value = models.TextField('Value', blank=True, null=True)
 
     def __str__(self):
         return '%s = "%s"' % (self.name, self.value)

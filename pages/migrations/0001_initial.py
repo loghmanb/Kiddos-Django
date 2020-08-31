@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('name', models.CharField(max_length=50,
                                           primary_key=True, serialize=False, verbose_name='Name')),
-                ('value', models.CharField(blank=True,
+                ('value', models.TextField(blank=True,
                                            max_length=512, null=True, verbose_name='Value')),
             ],
             options={
