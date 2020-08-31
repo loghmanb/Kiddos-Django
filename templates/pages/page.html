@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<section class="ftco-section ftco-no-pt ftc-no-pb">
+    <div class="container">
+        <div class="row">
+            {{ page.body | safe }}
+        </div>
+    </div>
+</section>
+{% endblock %}
