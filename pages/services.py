@@ -47,6 +47,8 @@ def get_website_settings():
         SETTINGS_OUR_COURSES_TEXT: '',
         SETTINGS_TEACHING_YOUR_CHILD: '',
         SETTINGS_ABOUT_PAGE: '',
+        SETTINGS_WEBSITE_TITLE: 'KiddosDjango School - Sample Djnago website',
+        SETTINGS_WEBSITE_NAME: 'Kiddos School',
     }
     data.update({setting.name: setting.value
                  for setting in models.Setting.objects.all()})

@@ -8,13 +8,17 @@
           <div class="block-23 mb-3">
             <ul>
               <li>
-                <span class="icon icon-map-marker"></span><span class="text">{{ settings_address }}</span>
+                <span class="icon icon-map-marker"></span>
+                <span class="text">{{ settings_address }}</span>
               </li>
               <li>
-                <a href="#"><span class="icon icon-phone"></span><span class="text">{{ settings_phone_no }}</span></a>
+                <a href="#"><span class="icon icon-phone"></span>
+                  <span class="text">{{ settings_phone_no }}</span></a>
               </li>
               <li>
-                <a href="#"><span class="icon icon-envelope"></span><span class="text">{{ settings_email }}</span></a>
+                <a href="#">
+                  <span class="icon icon-envelope"></span>
+                  <span class="text">{{ settings_email }}</span></a>
               </li>
             </ul>
           </div>
@@ -28,7 +32,9 @@
             <a href="{% url 'blog-single' blog_post.id %}" class="blog-img mr-4"
               style="background-image: url('{{ blog_post.image.url }}');"></a>
             <div class="text">
-              <h3 class="heading"><a href="#">{{ blog_post.title }}</a></h3>
+              <h3 class="heading">
+                <a href="{% url 'blog-single' blog_post.id %}">
+                  {{ blog_post.title }}</a></h3>
               <div class="meta">
                 <div>
                   <a href="#">
