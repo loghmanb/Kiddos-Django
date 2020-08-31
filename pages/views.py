@@ -24,6 +24,7 @@ from django.core.paginator import Paginator
 
 from . import models
 from . import services
+from .consts import SETTINGS_ABOUT_ARTICLE
 
 NO_PER_PAGE = 6
 
@@ -36,6 +37,7 @@ def render(request, template, data=None):
 
 
 def index(request):
+    data = services.get_website_settings()
     fast_links = models.Page.objects.filter(publish_on_index=True,
                                             is_published=True)
     endorsements = models.Endorsement.objects.filter(is_published=True)
@@ -46,7 +48,10 @@ def index(request):
     pricing_plans = models.PricingPlan.objects.all()
     gallery = models.Gallery.objects.filter(is_published=True
                                             ).order_by('-create_date')
-    return render(request, 'pages/index.html', {
+    if data[SETTINGS_ABOUT_ARTICLE]:
+        data['article'] = models.Page.objects.get(
+            pk=data[SETTINGS_ABOUT_ARTICLE])
+    data.update({
         'fast_links': fast_links,
         'endorsements': endorsements,
         'recent_blog_posts': recent_blog_posts,
@@ -55,10 +60,15 @@ def index(request):
         'pricing_plans': pricing_plans,
         'gallery': gallery,
     })
+    return _render(request, 'pages/index.html', data)
 
 
 def about(request):
-    return render(request, 'pages/about.html')
+    data = services.get_website_settings()
+    if data[SETTINGS_ABOUT_ARTICLE]:
+        data['article'] = models.Page.objects.get(
+            pk=data[SETTINGS_ABOUT_ARTICLE])
+    return _render(request, 'pages/about.html', data)
 
 
 def blog(request):
