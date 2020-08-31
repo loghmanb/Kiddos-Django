@@ -30,11 +30,11 @@ class Setting(models.Model):
         db_table = 'kiddos_settings'
 
     name = models.CharField('Name', primary_key=True,
-                            max_length=32, blank=False, null=False)
+                            max_length=50, blank=False, null=False)
     value = models.CharField('Value', max_length=512, blank=True, null=True)
 
     def __str__(self):
-        return '%s: %s' % (self.name, self.value)
+        return '%s = "%s"' % (self.name, self.value)
 
 
 class Course(models.Model):

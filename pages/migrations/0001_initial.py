@@ -18,12 +18,17 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Course',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=50, verbose_name='Name')),
-                ('class_time', models.CharField(max_length=20, verbose_name='Class Time')),
-                ('short_desc', models.CharField(max_length=256, verbose_name='Short Description')),
-                ('active', models.BooleanField(default=True, verbose_name='Is Active?!')),
-                ('image', models.ImageField(upload_to='images/%Y/%m/%d/', verbose_name='Image')),
+                ('class_time', models.CharField(
+                    max_length=20, verbose_name='Class Time')),
+                ('short_desc', models.CharField(
+                    max_length=256, verbose_name='Short Description')),
+                ('active', models.BooleanField(
+                    default=True, verbose_name='Is Active?!')),
+                ('image', models.ImageField(
+                    upload_to='images/%Y/%m/%d/', verbose_name='Image')),
             ],
             options={
                 'db_table': 'kiddos_courses',
@@ -32,8 +37,10 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Setting',
             fields=[
-                ('name', models.CharField(max_length=32, primary_key=True, serialize=False, verbose_name='Name')),
-                ('value', models.CharField(blank=True, max_length=512, null=True, verbose_name='Value')),
+                ('name', models.CharField(max_length=50,
+                                          primary_key=True, serialize=False, verbose_name='Name')),
+                ('value', models.CharField(blank=True,
+                                           max_length=512, null=True, verbose_name='Value')),
             ],
             options={
                 'db_table': 'kiddos_settings',
@@ -42,12 +49,16 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='BlogPost',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=128, verbose_name='Title')),
-                ('short_desc', models.CharField(max_length=256, verbose_name='Short Description')),
+                ('short_desc', models.CharField(
+                    max_length=256, verbose_name='Short Description')),
                 ('body', models.TextField(verbose_name='Body')),
-                ('create_date', models.DateTimeField(blank=True, default=datetime.datetime.now, verbose_name='Creation Date')),
-                ('create_user', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='+', to=settings.AUTH_USER_MODEL, verbose_name='Created by')),
+                ('create_date', models.DateTimeField(blank=True,
+                                                     default=datetime.datetime.now, verbose_name='Creation Date')),
+                ('create_user', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE,
+                                                  related_name='+', to=settings.AUTH_USER_MODEL, verbose_name='Created by')),
             ],
             options={
                 'db_table': 'kiddos_blog_post',

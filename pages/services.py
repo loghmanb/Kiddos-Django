@@ -32,6 +32,8 @@ def get_website_settings():
         SETTINGS_INSTAGRAM: 'my_instagram_account',
         SETTINGS_FACEBOOK: 'my_facebook_account',
         SETTINGS_WEBSITE: 'yoursite.com',
+        SETTINGS_BLOG_SECTION_TEXT: '',
+        SETTINGS_ENDORSEMENT_SECTION_TEXT: '',
     }
     data.update({setting.name: setting.value
                  for setting in models.Setting.objects.all()})
