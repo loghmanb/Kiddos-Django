@@ -152,7 +152,7 @@
     </div>
   </div>
 </section>
-{% endif %} {% if courses %}
+{% endif %} {% if sample_courses %}
 <section class="ftco-section">
   <div class="container">
     <div class="row justify-content-center mb-5 pb-2">
@@ -162,7 +162,7 @@
       </div>
     </div>
     <div class="row">
-      {% for course in courses %}
+      {% for course in sample_courses %}
       <div class="col-md-6 course d-lg-flex ftco-animate">
         <div class="img" style="background-image: url('{{ course.image.url }}')"></div>
         <div class="text bg-light p-4">
@@ -276,10 +276,7 @@
       <div class="col-md-6 py-5 px-md-5 bg-primary">
         <div class="heading-section heading-section-white ftco-animate mb-5">
           <h2 class="mb-4">Request A Quote</h2>
-          <p>
-            Far far away, behind the word mountains, far from the countries
-            Vokalia and Consonantia, there live the blind texts.
-          </p>
+          <p>{{ settings_request_q_quote_text }}</p>
         </div>
         <form action="#" class="appointment-form ftco-animate">
           <div class="d-md-flex">
@@ -351,7 +348,7 @@
             <p>{{ plan.short_desc }}</p>
           </div>
           <p class="button text-center">
-            <a href="#" class="btn {{ plan.plan_cls }} px-4 py-3">Take A Course</a>
+            <a href="{% url 'courses' %}" class="btn {{ plan.plan_cls }} px-4 py-3">Take A Course</a>
           </p>
         </div>
       </div>

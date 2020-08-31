@@ -63,6 +63,9 @@ class BlogPost(models.Model):
                             blank=True, null=False, default='')
     image = models.ImageField('Image', upload_to='images/%Y/%m/%d/')
     is_published = models.BooleanField(_('Is published!'), default=True)
+    author = models.ForeignKey('pages.Teacher', on_delete=models.DO_NOTHING,
+                               related_name='+', null=True,
+                               verbose_name=_('Author'))
     create_date = models.DateTimeField(verbose_name=_('Creation Date'),
                                        default=datetime.now, blank=True)
     create_user = models.ForeignKey(

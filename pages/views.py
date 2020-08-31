@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from django.shortcuts import render as _render
+from django.shortcuts import get_object_or_404, render as _render
 from django.core.paginator import Paginator
 
 from . import models
@@ -43,7 +43,7 @@ def index(request):
     endorsements = models.Endorsement.objects.filter(is_published=True)
     recent_blog_posts = models.BlogPost.objects.filter(
         is_published=True).order_by('-create_date')[:3]
-    courses = models.Course.objects.filter(active=True)[:4]
+    sample_courses = models.Course.objects.filter(active=True)[:4]
     teachers = models.Teacher.objects.filter(publish_on_index=True)
     pricing_plans = models.PricingPlan.objects.all()
     gallery = models.Gallery.objects.filter(is_published=True
@@ -55,7 +55,7 @@ def index(request):
         'fast_links': fast_links,
         'endorsements': endorsements,
         'recent_blog_posts': recent_blog_posts,
-        'courses': courses,
+        'sample_courses': sample_courses,
         'teachers': teachers,
         'pricing_plans': pricing_plans,
         'gallery': gallery,
@@ -86,7 +86,7 @@ def blog(request):
 
 
 def blog_single(request, id):
-    blog_post = models.BlogPost.objects.get(pk=id)
+    blog_post = get_object_or_404(models.BlogPost, pk=id)
     return render(request, 'pages/blog-single.html', {'blog_post': blog_post})
 
 
@@ -111,5 +111,10 @@ def teacher(request):
 
 
 def page(request, id):
-    page = models.Page.objects.get(pk=id)
+    page = get_object_or_404(models.Page, pk=id)
     return render(request, 'pages/page.html', {'page': page})
+
+
+def page_not_found_404_error(request, exception=None,
+                             template='pages/404.html'):
+    return render(request, template)
