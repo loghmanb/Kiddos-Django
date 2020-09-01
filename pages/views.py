@@ -106,9 +106,12 @@ def contact(request):
     return render(request, 'pages/contact.html', data)
 
 
-def courses(request):
-    courses = models.Course.objects.filter(active=True)
-    return render(request, 'pages/courses.html', {'courses': courses})
+def courses(request, id=None):
+    if id is None:
+        courses = models.Course.objects.filter(active=True)
+        return render(request, 'pages/courses.html', {'courses': courses})
+    course = get_object_or_404(models.Course, pk=id)
+    return render(request, 'pages/course.html', {'course': course})
 
 
 def pricing(request):

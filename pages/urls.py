@@ -31,6 +31,7 @@ urlpatterns = [
     path('page/<int:id>', views.page, name='page'),
     path('contact', views.contact, name='contact'),
     path('courses', views.courses, name='courses'),
+    path('courses/<int:id>', views.courses, name='course'),
     path('pricing', views.pricing, name='pricing'),
     path('teachers', views.teacher, name='teachers'),
     path('teachers/<int:id>', views.teacher, name='teacher'),

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="hero-wrap hero-wrap-2" style="background-image: url('{% static 'images/bg_2.jpg' %}');">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <h1 class="mb-2 bread">Certified Teachers</h1>
+                <p class="breadcrumbs">
+                    <span class="mr-2">
+                        <a href="{% url 'index' %}">Home <i class="ion-ios-arrow-forward"></i></a>
+                    </span>
+                    <span><a href="{% url 'courses' %}">Courses <i class="ion-ios-arrow-forward"></i></a></span>
+                    <span>{{ course.name }} <i class="ion-ios-arrow-forward"></i></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section ftco-no-pb">
+    <div class="container">
+        <div class="row">
+            <div class=" d-flex p-4 bg-light">
+                <div class="bio mr-5">
+                    <img src="{{ course.image.url }}" alt="{{ course.name }}" class="img-fluid mb-4">
+                </div>
+                <div class="desc">
+                    <h3>{{ course.name }}</h3>
+                    <p>{{ course.class_time }}</p>
+                    <p>{{ course.short_desc }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
