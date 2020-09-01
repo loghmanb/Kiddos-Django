@@ -136,7 +136,6 @@ def request_a_quote(request):
         last_name=request.POST['last_name'],
         course_id=None if request.POST['course'] == '-1' else request.POST['course'],
         phone=request.POST['phone'],
-        email=request.POST['email'],
         message=request.POST['message'],
     )
     rfq.save()

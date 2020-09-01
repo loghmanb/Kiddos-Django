@@ -198,8 +198,8 @@ class ReuestForQuote(models.Model):
     last_name = models.CharField(_('Last Name'), max_length=20, null=False)
     course = models.ForeignKey(Course, related_name='+', null=True,
                                verbose_name=_('Course'), on_delete=models.DO_NOTHING)
-    email = models.EmailField(_("Email"), blank=False,
-                              null=False, max_length=100)
+    email = models.EmailField(_("Email"), blank=True,
+                              null=True, max_length=100)
     phone = models.CharField(_('Phone'), max_length=20,
                              null=False, blank=False)
     message = models.TextField(_('Message'), null=False)
