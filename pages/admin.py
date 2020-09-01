@@ -125,3 +125,13 @@ class RequestForQuoteAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.ReuestForQuote, RequestForQuoteAdmin)
+
+
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ('id', 'full_name', 'subject', 'email', 'create_date')
+    list_display_links = ('id', 'full_name', 'subject', 'email')
+    search_fields = ('full_name', 'subject', 'email',)
+    list_per_page = 25
+
+
+admin.site.register(models.Message, MessageAdmin)

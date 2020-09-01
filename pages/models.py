@@ -206,3 +206,16 @@ class ReuestForQuote(models.Model):
     is_done = models.BooleanField(_('Is done?!'), default=False)
     create_date = models.DateTimeField(_('Create Date'),
                                        default=datetime.now, null=False)
+
+
+class Message(models.Model):
+    class Meta:
+        db_table = 'message'
+
+    full_name = models.CharField(_('Full Name'), max_length=50, null=False)
+    email = models.EmailField(_("Email"), blank=True,
+                              null=True, max_length=100)
+    subject = models.CharField(_('Subject'), max_length=150, null=False)
+    message = models.TextField(_('Message'), null=False)
+    create_date = models.DateTimeField(_('Create Date'),
+                                       default=datetime.now, null=False)
