@@ -186,4 +186,5 @@ class Subscription(models.Model):
     class Meta:
         db_table = 'kiddos_subscription'
 
-    email = models.EmailField(_("Email"), max_length=100)
+    email = models.EmailField(_("Email"), unique=True,
+                              null=False, max_length=100)

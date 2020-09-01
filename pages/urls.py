@@ -33,6 +33,6 @@ urlpatterns = [
     path('courses', views.courses, name='courses'),
     path('pricing', views.pricing, name='pricing'),
     path('teacher', views.teacher, name='teacher'),
-    path('request-a-quote', views.index, name='request_a_quote'),
-    path('subscribe', views.index, name='subscribe'),
+    path('request-a-quote', views.request_a_quote, name='request_a_quote'),
+    path('subscribe-me', views.subscribe_me, name='subscribe-me'),
 ]

@@ -115,6 +115,21 @@ def page(request, id):
     return render(request, 'pages/page.html', {'page': page})
 
 
+def subscribe_me(request):
+    email = request.POST['email']
+    data = {'email': email}
+    if models.Subscription.objects.filter(email=email).exists():
+        data['error'] = 'Email "%s" is already subscribed!' % (email,)
+    else:
+        subscrition = models.Subscription(email=email)
+        subscrition.save()
+    return render(request, 'pages/subscribtion.html', data)
+
+
+def request_a_quote(request):
+    return render(request, 'pages/404.html')
+
+
 def page_not_found_404_error(request, exception=None,
                              template='pages/404.html'):
     return render(request, template)
