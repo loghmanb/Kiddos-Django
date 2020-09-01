@@ -32,3 +32,5 @@ urlpatterns = [
 admin.site.site_header = "Kiddos-Django Admin"
 admin.site.site_title = "Kiddos-Django Admin Portal"
 admin.site.index_title = "Welcome to Kiddos-Django Portal"
+
+handler404 = 'pages.views.page_not_found_404_error'
