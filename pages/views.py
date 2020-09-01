@@ -93,7 +93,17 @@ def blog_single(request, id):
 
 
 def contact(request):
-    return render(request, 'pages/contact.html')
+    data = {}
+    if request.POST:
+        message = models.Message(
+            full_name=request.POST['full_name'],
+            email=request.POST['email'],
+            subject=request.POST['subject'],
+            message=request.POST['full_name'],
+        )
+        message.save()
+        data['status'] = 'recieved'
+    return render(request, 'pages/contact.html', data)
 
 
 def courses(request):
