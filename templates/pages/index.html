@@ -278,13 +278,14 @@
           <h2 class="mb-4">Request A Quote</h2>
           <p>{{ settings_request_q_quote_text }}</p>
         </div>
-        <form action="#" class="appointment-form ftco-animate">
+        <form action="{% url 'request_a_quote' %}" method="POST" class="appointment-form ftco-animate">
+          {% csrf_token %}
           <div class="d-md-flex">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="First Name" />
+              <input name="first_name" type="text" class="form-control" placeholder="First Name" required />
             </div>
             <div class="form-group ml-md-4">
-              <input type="text" class="form-control" placeholder="Last Name" />
+              <input name="last_name" type="text" class="form-control" placeholder="Last Name" required />
             </div>
           </div>
           <div class="d-md-flex">
@@ -294,7 +295,7 @@
                   <div class="icon">
                     <span class="ion-ios-arrow-down"></span>
                   </div>
-                  <select name="" id="" class="form-control">
+                  <select name="quote_type" required class="form-control">
                     <option value="">Select Your Course</option>
                     <option value="">Art Lesson</option>
                     <option value="">Language Lesson</option>
@@ -306,12 +307,12 @@
               </div>
             </div>
             <div class="form-group ml-md-4">
-              <input type="text" class="form-control" placeholder="Phone" />
+              <input name="phone" type="text" class="form-control" placeholder="Phone" required />
             </div>
           </div>
           <div class="d-md-flex">
             <div class="form-group">
-              <textarea name="" id="" cols="30" rows="2" class="form-control" placeholder="Message"></textarea>
+              <textarea name="message" id="" cols="30" rows="2" class="form-control" placeholder="Message"></textarea>
             </div>
             <div class="form-group ml-md-4">
               <input type="submit" value="Request A Quote" class="btn btn-secondary py-3 px-4" />
