@@ -48,6 +48,18 @@ class BlogPostAdmin(admin.ModelAdmin):
 admin.site.register(models.BlogPost, BlogPostAdmin)
 
 
+class PostCommentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'email', 'website', 'is_published',
+                    'blog_post', 'create_date')
+    list_display_links = ('id', 'name', 'email', 'website',)
+    list_filter = ('is_published',)
+    search_fields = ('name', 'email', 'website',)
+    list_per_page = 25
+
+
+admin.site.register(models.PostComment, PostCommentAdmin)
+
+
 class CourseAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'class_time', 'active')
     list_display_links = ('id', 'name',)

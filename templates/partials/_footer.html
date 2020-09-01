@@ -46,7 +46,8 @@
                     {{ blog_post.author }}</a>
                 </div>
                 <div>
-                  <a href="#"><span class="icon-chat"></span> 19</a>
+                  <a href="{% url 'blog-single' blog_post.id %}">
+                    <span class="icon-chat"></span> {{ blog_post.published_comments.count }}</a>
                 </div>
               </div>
             </div>

@@ -81,8 +81,32 @@ class BlogPost(models.Model):
     def tag_list(self):
         return self.tags and self.tags.split('|') or []
 
+    @property
+    def published_comments(self):
+        return PostComment.objects.filter(blog_post__id=self.id,
+                                          is_published=True)
+
     def __str__(self):
         return '%s [written by %s]' % (self.title, self.create_user)
+
+
+class PostComment(models.Model):
+    class Meta:
+        db_table = 'kiddos_post_comment'
+
+    name = models.CharField(_('Name'), max_length=100, blank=False, null=False)
+    blog_post = models.ForeignKey(BlogPost, related_name='comments',
+                                  on_delete=models.CASCADE, null=False,
+                                  verbose_name=_('Blog Post'),)
+    email = models.EmailField(_("Email"), max_length=100, null=False,
+                              blank=False)
+    website = models.CharField(_('Website'), max_length=100, blank=True,
+                               null=True)
+    message = models.TextField(_('Message'), null=False)
+    create_date = models.DateTimeField(_('Create Date'), default=datetime.now,
+                                       null=False)
+    is_published = models.BooleanField(_('Is published!'), default=False,
+                                       null=False)
 
 
 class TeacherPosition(models.Model):
@@ -113,8 +137,8 @@ class Teacher(models.Model):
                                   blank=True, null=True)
     instagram = models.CharField(_('Instagram Account'), max_length=30,
                                  blank=True, null=True)
-    is_published = models.BooleanField(_('Is published!'),
-                                       default=True, null=False)
+    is_published = models.BooleanField(_('Is published!'), default=True,
+                                       null=False)
     publish_on_index = models.BooleanField(_('Is published on index page?!'),
                                            default=True, null=False)
 
@@ -163,8 +187,8 @@ class Gallery(models.Model):
         _('Photo'), upload_to='photo/gallery/', null=False)
     is_published = models.BooleanField(_('Is Published!'),
                                        default=True, null=False)
-    create_date = models.DateTimeField(_('Create Date'),
-                                       default=datetime.now, null=False)
+    create_date = models.DateTimeField(_('Create Date'), default=datetime.now,
+                                       null=False)
 
 
 class Page(models.Model):
@@ -204,8 +228,8 @@ class ReuestForQuote(models.Model):
                              null=False, blank=False)
     message = models.TextField(_('Message'), null=False)
     is_done = models.BooleanField(_('Is done?!'), default=False)
-    create_date = models.DateTimeField(_('Create Date'),
-                                       default=datetime.now, null=False)
+    create_date = models.DateTimeField(_('Create Date'), default=datetime.now,
+                                       null=False)
 
 
 class Message(models.Model):
@@ -217,5 +241,5 @@ class Message(models.Model):
                               null=True, max_length=100)
     subject = models.CharField(_('Subject'), max_length=150, null=False)
     message = models.TextField(_('Message'), null=False)
-    create_date = models.DateTimeField(_('Create Date'),
-                                       default=datetime.now, null=False)
+    create_date = models.DateTimeField(_('Create Date'), default=datetime.now,
+                                       null=False)

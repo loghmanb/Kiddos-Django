@@ -89,7 +89,18 @@ def blog(request):
 
 def blog_single(request, id):
     blog_post = get_object_or_404(models.BlogPost, pk=id)
-    return render(request, 'pages/blog-single.html', {'blog_post': blog_post})
+    data = {'blog_post': blog_post}
+    if request.POST:
+        comment = models.PostComment(
+            name=request.POST['name'],
+            email=request.POST['email'],
+            website=request.POST['website'],
+            message=request.POST['message'],
+            blog_post=blog_post,
+        )
+        comment.save()
+        data['comment'] = 'recieved'
+    return render(request, 'pages/blog-single.html', data)
 
 
 def contact(request):
