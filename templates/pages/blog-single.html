@@ -36,11 +36,13 @@
                 {% if blog_post.author %}
                 <div class="about-author d-flex p-4 bg-light">
                     <div class="bio mr-5">
-                        <img src="{{ blog_post.author.photo.url }}" alt="{{ blog_post.author.full_name }}"
-                            class="img-fluid mb-4">
+                        <a href="{% url 'teacher' blog_post.author.id %}">
+                            <img src="{{ blog_post.author.photo.url }}" alt="{{ blog_post.author.full_name }}"
+                                class="img-fluid mb-4">
+                        </a>
                     </div>
                     <div class="desc">
-                        <h3>{{ blog_post.author.full_name }}</h3>
+                        <h3><a href="{% url 'teacher' blog_post.author.id %}">{{ blog_post.author.full_name }}</a></h3>
                         <p>{{ blog_post.author.short_desc }}</p>
                     </div>
                 </div>

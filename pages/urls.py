@@ -32,7 +32,8 @@ urlpatterns = [
     path('contact', views.contact, name='contact'),
     path('courses', views.courses, name='courses'),
     path('pricing', views.pricing, name='pricing'),
-    path('teacher', views.teacher, name='teacher'),
+    path('teachers', views.teacher, name='teachers'),
+    path('teachers/<int:id>', views.teacher, name='teacher'),
     path('request-a-quote', views.request_a_quote, name='request-for-quote'),
     path('subscribe-me', views.subscribe_me, name='subscribe-me'),
 ]

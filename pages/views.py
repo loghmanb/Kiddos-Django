@@ -117,9 +117,12 @@ def pricing(request):
                   {'pricing_plans': pricing_plans})
 
 
-def teacher(request):
-    teachers = models.Teacher.objects.filter(is_published=True)
-    return render(request, 'pages/teacher.html', {'teachers': teachers})
+def teacher(request, id=None):
+    if id is None:
+        teachers = models.Teacher.objects.filter(is_published=True)
+        return render(request, 'pages/teachers.html', {'teachers': teachers})
+    teacher = get_object_or_404(models.Teacher, pk=id)
+    return render(request, 'pages/teacher.html', {'teacher': teacher})
 
 
 def page(request, id):

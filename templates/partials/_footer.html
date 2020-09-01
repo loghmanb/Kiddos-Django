@@ -42,7 +42,7 @@
                     {{ blog_post.create_date|naturaltime }}</a>
                 </div>
                 <div>
-                  <a href="#"><span class="icon-person"></span>
+                  <a href="{% url 'teacher' blog_post.author.id %}"><span class="icon-person"></span>
                     {{ blog_post.author }}</a>
                 </div>
                 <div>
@@ -67,7 +67,7 @@
               <a href="{% url 'about' %}"><span class="ion-ios-arrow-round-forward mr-2"></span>About</a>
             </li>
             <li>
-              <a href="{% url 'teacher' %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Teacher</a>
+              <a href="{% url 'teachers' %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Teacher</a>
             </li>
             <li>
               <a href="{% url 'courses' %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Courses</a>
