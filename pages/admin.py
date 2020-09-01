@@ -31,6 +31,9 @@ class SettingAdmin(admin.ModelAdmin):
     list_per_page = 25
 
 
+admin.site.register(models.Setting, SettingAdmin)
+
+
 class BlogPostAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'short_desc', 'tags', 'is_published',
                     'create_user', 'create_date',)
@@ -42,6 +45,9 @@ class BlogPostAdmin(admin.ModelAdmin):
     list_per_page = 25
 
 
+admin.site.register(models.BlogPost, BlogPostAdmin)
+
+
 class CourseAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'class_time', 'active')
     list_display_links = ('id', 'name',)
@@ -49,6 +55,9 @@ class CourseAdmin(admin.ModelAdmin):
     list_editable = ('active',)
     search_fields = ('name',)
     list_per_page = 25
+
+
+admin.site.register(models.Course, CourseAdmin)
 
 
 class TeacherAdmin(admin.ModelAdmin):
@@ -61,11 +70,18 @@ class TeacherAdmin(admin.ModelAdmin):
     list_per_page = 25
 
 
+admin.site.register(models.TeacherPosition)
+admin.site.register(models.Teacher, TeacherAdmin)
+
+
 class PricingPlanAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'price', 'duration')
     list_display_links = ('id', 'name',)
     search_fields = ('name',)
     list_per_page = 25
+
+
+admin.site.register(models.PricingPlan, PricingPlanAdmin)
 
 
 class EndorsementAdmin(admin.ModelAdmin):
@@ -75,11 +91,17 @@ class EndorsementAdmin(admin.ModelAdmin):
     list_per_page = 25
 
 
+admin.site.register(models.Endorsement, EndorsementAdmin)
+
+
 class GalleryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'photo', 'is_published')
     list_display_links = ('id', 'name')
     search_fields = ('name',)
     list_per_page = 25
+
+
+admin.site.register(models.Gallery, GalleryAdmin)
 
 
 class PageAdmin(admin.ModelAdmin):
@@ -90,20 +112,16 @@ class PageAdmin(admin.ModelAdmin):
     list_per_page = 25
 
 
-admin.site.register(models.Setting, SettingAdmin)
-
-admin.site.register(models.BlogPost, BlogPostAdmin)
-
-admin.site.register(models.Course, CourseAdmin)
-
-admin.site.register(models.TeacherPosition)
-
-admin.site.register(models.Teacher, TeacherAdmin)
-
-admin.site.register(models.PricingPlan, PricingPlanAdmin)
-
-admin.site.register(models.Endorsement, EndorsementAdmin)
-
-admin.site.register(models.Gallery, GalleryAdmin)
-
 admin.site.register(models.Page, PageAdmin)
+
+
+class RequestForQuoteAdmin(admin.ModelAdmin):
+    list_display = ('id', 'first_name', 'last_name', 'phone',
+                    'email', 'course', 'is_done', 'create_date')
+    list_display_links = ('id', 'first_name', 'last_name', 'phone', 'email')
+    search_fields = ('first_name', 'last_name', 'phone', 'email',)
+    list_filter = ('is_done', 'course')
+    list_per_page = 25
+
+
+admin.site.register(models.ReuestForQuote, RequestForQuoteAdmin)

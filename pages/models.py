@@ -188,3 +188,21 @@ class Subscription(models.Model):
 
     email = models.EmailField(_("Email"), unique=True,
                               null=False, max_length=100)
+
+
+class ReuestForQuote(models.Model):
+    class Meta:
+        db_table = 'kiddos_rfq'
+
+    first_name = models.CharField(_('First Name'), max_length=20, null=False)
+    last_name = models.CharField(_('Last Name'), max_length=20, null=False)
+    course = models.ForeignKey(Course, related_name='+', null=True,
+                               verbose_name=_('Course'), on_delete=models.DO_NOTHING)
+    email = models.EmailField(_("Email"), blank=False,
+                              null=False, max_length=100)
+    phone = models.CharField(_('Phone'), max_length=20,
+                             null=False, blank=False)
+    message = models.TextField(_('Message'), null=False)
+    is_done = models.BooleanField(_('Is done?!'), default=False)
+    create_date = models.DateTimeField(_('Create Date'),
+                                       default=datetime.now, null=False)

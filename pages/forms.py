@@ -22,7 +22,7 @@
 from django import forms
 
 
-class RequestQuoteForm(forms.Form):
+class RequestForQuoteForm(forms.Form):
     first_name = forms.CharField()
     last_name = forms.CharField()
     phone = forms.CharField()

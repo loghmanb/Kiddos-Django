@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from django.shortcuts import get_object_or_404, render as _render
+from django.shortcuts import get_object_or_404, redirect, render as _render
 from django.core.paginator import Paginator
 
 from . import models
@@ -44,6 +44,7 @@ def index(request):
     recent_blog_posts = models.BlogPost.objects.filter(
         is_published=True).order_by('-create_date')[:3]
     sample_courses = models.Course.objects.filter(active=True)[:4]
+    courses = models.Course.objects.filter(active=True)
     teachers = models.Teacher.objects.filter(publish_on_index=True)
     pricing_plans = models.PricingPlan.objects.all()
     gallery = models.Gallery.objects.filter(is_published=True
@@ -56,6 +57,7 @@ def index(request):
         'endorsements': endorsements,
         'recent_blog_posts': recent_blog_posts,
         'sample_courses': sample_courses,
+        'courses': courses,
         'teachers': teachers,
         'pricing_plans': pricing_plans,
         'gallery': gallery,
@@ -127,7 +129,21 @@ def subscribe_me(request):
 
 
 def request_a_quote(request):
-    return render(request, 'pages/404.html')
+    if not request.POST:
+        return redirect(request, 'index')
+    rfq = models.ReuestForQuote(
+        first_name=request.POST['first_name'],
+        last_name=request.POST['last_name'],
+        course_id=None if request.POST['course'] == '-1' else request.POST['course'],
+        phone=request.POST['phone'],
+        email=request.POST['email'],
+        message=request.POST['message'],
+    )
+    rfq.save()
+    return render(request, 'pages/rfq.html', {
+        'first_name': request.POST['first_name'],
+        'last_name': request.POST['last_name'],
+    })
 
 
 def page_not_found_404_error(request, exception=None,

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="ftco-section ftco-no-pb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <p>
+                    <span>Dear <strong>{{ first_name }} {{ last_name }}</strong>,</span>
+                <p>We recieve your request. We will contact you soon!</p>
+                <a href="{% url 'index' %}">Back to home page</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
