@@ -177,3 +177,10 @@ class Page(models.Model):
     is_published = models.BooleanField(_('Is Published'),
                                        default=False, null=False)
     image = models.ImageField(_('Image'), upload_to='images/%Y/%m/%d/')
+
+
+class Subscription(models.Model):
+    class Meta:
+        db_table = 'kiddos_subscription'
+
+    email = models.EmailField(_("Email"), max_length=100)
