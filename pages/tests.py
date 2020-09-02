@@ -20,3 +20,37 @@
 ##############################################################################
 
 from django.test import TestCase
+
+from .models import BlogPost, PostComment
+
+
+class KiddosTestCase(TestCase):
+    def setUp(self):
+        blog_post = BlogPost.objects.create(
+            title="Test post",
+            short_desc="Test short description",
+            body="test body",
+            tags="Tag1|Tag2")
+        PostComment.objects.create(
+            name='Test comment 1',
+            blog_post=blog_post,
+            email='test@test.com',
+            message='Test message 1',
+            is_published=True
+        )
+        PostComment.objects.create(
+            name='Test comment 2',
+            blog_post=blog_post,
+            email='test@test.com',
+            message='Test message 2',
+        )
+
+    def test__BlogPost__tag_list__property(self):
+        blog_post = BlogPost.objects.get(title="Test post")
+        self.assertEqual(blog_post.tag_list, ['Tag1', 'Tag2'])
+
+    def test__BlogPost__published_comments__property(self):
+        blog_post = BlogPost.objects.get(title="Test post")
+        comments = PostComment.objects.filter(blog_post__id=blog_post.id,
+                                              is_published=True)
+        self.assertEqual(blog_post.published_comments, comments)
