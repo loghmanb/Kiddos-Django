@@ -21,12 +21,16 @@
 
 from django.shortcuts import get_object_or_404, redirect, render as _render
 from django.core.paginator import Paginator
+from django.core.mail import send_mail
+from django.db.models import Q
 
 from . import models
 from . import services
 from .consts import SETTINGS_ABOUT_ARTICLE
 
 NO_PER_PAGE = 6
+
+MAIL_SENDER = ''
 
 
 def render(request, template, data=None):
@@ -75,16 +79,25 @@ def about(request):
 
 def blog(request):
     blog_posts = models.BlogPost.objects.filter(
-        is_published=True).order_by('-create_date')
+        is_published=True)
+    search = request.POST and request.POST.get('search')
+    if search:
+        blog_posts = blog_posts.filter(
+            Q(title__icontains=search)
+            | Q(short_desc__icontains=search)
+            | Q(body__icontains=search)
+        )
+    blog_posts = blog_posts.order_by('-create_date')
     paginator = Paginator(blog_posts, NO_PER_PAGE)
     page = int(request.GET.get('page', 1))
     pages = range(max(1, page-2), min(page+2, paginator.num_pages)+1)
-    return render(request, 'pages/blog.html',
-                  {'blog_posts': paginator.get_page(page),
-                   'count': paginator.count,
-                   'page_no': page,
-                   'pages': pages,
-                   'num_pages': paginator.num_pages, })
+    return render(request, 'pages/blog.html', {
+        'search': search,
+        'blog_posts': paginator.get_page(page),
+        'count': paginator.count,
+        'page_no': page,
+        'pages': pages,
+        'num_pages': paginator.num_pages, })
 
 
 def blog_single(request, id):
@@ -150,6 +163,15 @@ def subscribe_me(request):
     if models.Subscription.objects.filter(email=email).exists():
         data['error'] = 'Email "%s" is already subscribed!' % (email,)
     else:
+        if MAIL_SENDER:
+            send_mail('Subscribtion to Kiddos-Django',
+                      "Subscribe to Kiddos-Django",
+                      MAIL_SENDER,
+                      [email],
+                      fail_silently=False,
+                      html_message='''
+<h2>Congratulation</h2>
+<p>You successfully were Subscribed!</p>''')
         subscrition = models.Subscription(email=email)
         subscrition.save()
     return render(request, 'pages/subscribtion.html', data)
