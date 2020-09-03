@@ -19,19 +19,16 @@
 #
 ##############################################################################
 
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
-urlpatterns = [
-    path('', include('pages.urls')),
-    path('frontend/', include('frontend.urls'), name='fronend'),
-    path('admin/', admin.site.urls, name='admin'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+from pages.models import BlogPost
 
-admin.site.site_header = "Kiddos-Django Admin"
-admin.site.site_title = "Kiddos-Django Admin Portal"
-admin.site.index_title = "Welcome to Kiddos-Django Portal"
+from .serializers import BlogPostSerializer
 
-handler404 = 'pages.views.page_not_found_404_error'
+
+@api_view(['GET'])
+def blog_post(request):
+    app_qs = BlogPost.objects.filter(is_published=True)
+    serializer = BlogPostSerializer(app_qs, many=True)
+    return Response(serializer.data)

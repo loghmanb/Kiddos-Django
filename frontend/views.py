@@ -19,19 +19,13 @@
 #
 ##############################################################################
 
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
+from django.shortcuts import render
+from django.http import Http404
 
-urlpatterns = [
-    path('', include('pages.urls')),
-    path('frontend/', include('frontend.urls'), name='fronend'),
-    path('admin/', admin.site.urls, name='admin'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-admin.site.site_header = "Kiddos-Django Admin"
-admin.site.site_title = "Kiddos-Django Admin Portal"
-admin.site.index_title = "Welcome to Kiddos-Django Portal"
+def home(request):
+    return render(request, 'frontend/home.html')
 
-handler404 = 'pages.views.page_not_found_404_error'
+
+def api_not_found(requst):
+    raise Http404("API not fould!")
