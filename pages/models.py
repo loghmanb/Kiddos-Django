@@ -60,11 +60,11 @@ class BlogPost(models.Model):
     """
     class Meta:
         db_table = 'kiddos_blog_post'
-
-    indexes = [
-        models.Index(name='search_on_blog_pots',
-                     fields=['is_published', 'title', 'short_desc']),
-    ]
+        indexes = [
+            models.Index(name='search_on_blog_pots',
+                         fields=['is_published', 'title', 'short_desc']),
+        ]
+        ordering = ('-create_date',)
 
     title = models.CharField('Title', max_length=128, blank=False, null=False,
                              help_text='Enter title of blog post')

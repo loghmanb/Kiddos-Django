@@ -57,14 +57,12 @@ def index(request):
     fast_links = models.Page.objects.filter(publish_on_index=True,
                                             is_published=True)
     endorsements = models.Endorsement.objects.filter(is_published=True)
-    recent_blog_posts = models.BlogPost.objects.filter(
-        is_published=True).order_by('-create_date')[:3]
+    recent_blog_posts = models.BlogPost.objects.filter(is_published=True)[:3]
     sample_courses = models.Course.objects.filter(active=True)[:4]
     courses = models.Course.objects.filter(active=True)
     teachers = models.Teacher.objects.filter(publish_on_index=True)
     pricing_plans = models.PricingPlan.objects.all()
-    gallery = models.Gallery.objects.filter(is_published=True
-                                            ).order_by('-create_date')
+    gallery = models.Gallery.objects.filter(is_published=True)
     if data[SETTINGS_ABOUT_ARTICLE]:
         data['article'] = models.Page.objects.get(
             pk=data[SETTINGS_ABOUT_ARTICLE])
@@ -99,7 +97,6 @@ def blog(request):
             | Q(short_desc__icontains=search)
             | Q(body__icontains=search)
         )
-    blog_posts = blog_posts.order_by('-create_date')
     paginator = Paginator(blog_posts, NO_PER_PAGE)
     page = int(request.GET.get('page', 1))
     pages = range(max(1, page-2), min(page+2, paginator.num_pages)+1)
