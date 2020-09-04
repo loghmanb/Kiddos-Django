@@ -52,6 +52,7 @@ class PostCommentAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'email', 'website', 'is_published',
                     'blog_post', 'create_date')
     list_display_links = ('id', 'name', 'email', 'website',)
+    list_editable = ('is_published',)
     list_filter = ('is_published',)
     search_fields = ('name', 'email', 'website',)
     list_per_page = 25
