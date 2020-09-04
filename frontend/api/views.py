@@ -20,11 +20,13 @@
 ##############################################################################
 
 from rest_framework.decorators import api_view
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
+from knox.models import AuthToken
 
 from pages.models import BlogPost
 
-from .serializers import BlogPostSerializer
+from .serializers import *
 
 
 @api_view(['GET'])
@@ -32,3 +34,18 @@ def blog_post(request):
     app_qs = BlogPost.objects.filter(is_published=True)
     serializer = BlogPostSerializer(app_qs, many=True)
     return Response(serializer.data)
+
+
+class LoginAPIView(GenericAPIView):
+    serializer_class = LoginSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validate_data
+        user_data = UserSerializer(user, self.get_serializer_context()
+                                   ).data
+        return Response({
+            'user': user_data,
+            'token': AuthToken.objects.create(user=user)[1]
+        })

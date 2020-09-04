@@ -19,8 +19,9 @@
 #
 ##############################################################################
 
-from rest_framework import serializers
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from rest_framework import serializers
 
 from pages.models import BlogPost
 
@@ -30,3 +31,24 @@ class BlogPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = BlogPost
         fields = ('id', 'title', 'short_desc', 'body')
+
+
+class LoginSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(label='Username')
+    password = serializers.CharField(label='Password')
+
+    def validate(self, data):
+        user = authenticate(**data)
+        if user:
+            if user.is_active:
+                return user
+            else:
+                raise serializers.ValidationError('User is not active!')
+            raise serializers.ValidationError(
+                'User credential is not correct!')
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'first_name', 'last_name', 'email')

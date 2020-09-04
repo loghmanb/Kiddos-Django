@@ -21,8 +21,10 @@
 
 from django.urls import path
 
-from .views import blog_post
+from .views import *
+
 
 urlpatterns = [
     path('blog-post', blog_post),
+    path('login', LoginAPIView.as_view()),
 ]
