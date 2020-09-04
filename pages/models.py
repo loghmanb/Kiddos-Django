@@ -55,6 +55,9 @@ class Course(models.Model):
 
 
 class BlogPost(models.Model):
+    """
+    Stores a single blog post related to :model:`pages.Teacher`.
+    """
     class Meta:
         db_table = 'kiddos_blog_post'
 
@@ -94,6 +97,9 @@ class BlogPost(models.Model):
 
 
 class PostComment(models.Model):
+    """
+    Stores a single comment of blog post, related to :model:`pages.BlogPost`
+    """
     class Meta:
         db_table = 'kiddos_post_comment'
 

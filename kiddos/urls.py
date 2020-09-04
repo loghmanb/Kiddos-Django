@@ -28,6 +28,7 @@ urlpatterns = [
     path('', include('pages.urls')),
     path('frontend/', include('frontend.urls'), name='fronend'),
     path('admin/', admin.site.urls, name='admin'),
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 admin.site.site_header = "Kiddos-Django Admin"
