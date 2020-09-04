@@ -61,9 +61,16 @@ class BlogPost(models.Model):
     class Meta:
         db_table = 'kiddos_blog_post'
 
-    title = models.CharField('Title', max_length=128, blank=False, null=False)
+    indexes = [
+        models.Index(name='search_on_blog_pots',
+                     fields=['is_published', 'title', 'short_desc']),
+    ]
+
+    title = models.CharField('Title', max_length=128, blank=False, null=False,
+                             help_text='Enter title of blog post')
     short_desc = models.CharField('Short Description', max_length=256)
-    body = models.TextField('Body')
+    body = models.TextField(
+        'Body', help_text='HTML tags can be used to decorating the text')
     tags = models.CharField(_('Tags'), max_length=128,
                             blank=True, null=False, default='')
     image = models.ImageField('Image', upload_to='images/%Y/%m/%d/',
