@@ -23,6 +23,8 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
+from .utils import *
+
 
 class Setting(models.Model):
     class Meta:
@@ -45,7 +47,8 @@ class Course(models.Model):
                                   null=False)
     short_desc = models.CharField('Short Description', max_length=256)
     active = models.BooleanField('Is Active?!', default=True)
-    image = models.ImageField('Image', upload_to='images/%Y/%m/%d/')
+    image = models.ImageField('Image', upload_to='images/%Y/%m/%d/',
+                              validators=[validate_image_size])
 
     def __str__(self):
         return '%s [%s]' % (self.name, self.class_time)
@@ -60,7 +63,8 @@ class BlogPost(models.Model):
     body = models.TextField('Body')
     tags = models.CharField(_('Tags'), max_length=128,
                             blank=True, null=False, default='')
-    image = models.ImageField('Image', upload_to='images/%Y/%m/%d/')
+    image = models.ImageField('Image', upload_to='images/%Y/%m/%d/',
+                              validators=[validate_image_size])
     is_published = models.BooleanField(_('Is published!'), default=True)
     author = models.ForeignKey('pages.Teacher', on_delete=models.DO_NOTHING,
                                related_name='+', null=True,
@@ -127,7 +131,8 @@ class Teacher(models.Model):
                                  related_name='+', verbose_name=_('Position'))
     short_desc = models.CharField(_('Short Description'), max_length=256)
     photo = models.ImageField(verbose_name=_('Photo'), upload_to='photos/%Y/%m/%d/',
-                              null=True, blank=True)
+                              null=True, blank=True,
+                              validators=[validate_image_size])
     twitter = models.CharField(_('Twitter Account'), max_length=30,
                                blank=True, null=True)
     facebook = models.CharField(_('Facebook Account'), max_length=30,
@@ -155,7 +160,7 @@ class PricingPlan(models.Model):
     short_desc = models.CharField(_('Short Description'), max_length=256,
                                   blank=False, null=False)
     image = models.ImageField(verbose_name=_('Image'), upload_to='images/%Y/%m/%d/',
-                              null=False)
+                              null=False, validators=[validate_image_size])
     plan_cls = models.CharField(_('Plan Style Class'), max_length=20,
                                 blank=True, null=True)
 
@@ -174,7 +179,7 @@ class Endorsement(models.Model):
     is_published = models.BooleanField(_('Is published'),
                                        default=True, null=False)
     photo = models.ImageField(_('Photo'), upload_to='photos/%Y/%m/%d',
-                              null=True)
+                              null=True, validators=[validate_image_size])
 
 
 class Gallery(models.Model):
@@ -182,8 +187,8 @@ class Gallery(models.Model):
         db_table = 'kiddos_gallery'
 
     name = models.CharField(_('Name'), max_length=50, blank=False, null=False)
-    photo = models.ImageField(
-        _('Photo'), upload_to='photo/gallery/', null=False)
+    photo = models.ImageField(_('Photo'), upload_to='photo/gallery/',
+                              null=False, validators=[validate_image_size])
     is_published = models.BooleanField(_('Is Published!'),
                                        default=True, null=False)
     create_date = models.DateTimeField(_('Create Date'), auto_now_add=True,
@@ -202,7 +207,8 @@ class Page(models.Model):
                                            default=False, null=False)
     is_published = models.BooleanField(_('Is Published'),
                                        default=False, null=False)
-    image = models.ImageField(_('Image'), upload_to='images/%Y/%m/%d/')
+    image = models.ImageField(_('Image'), upload_to='images/%Y/%m/%d/',
+                              validators=[validate_image_size])
 
 
 class Subscription(models.Model):
