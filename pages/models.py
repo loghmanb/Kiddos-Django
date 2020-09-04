@@ -19,7 +19,6 @@
 #
 ##############################################################################
 
-from datetime import datetime
 from django.db import models
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
@@ -67,7 +66,7 @@ class BlogPost(models.Model):
                                related_name='+', null=True,
                                verbose_name=_('Author'))
     create_date = models.DateTimeField(verbose_name=_('Creation Date'),
-                                       default=datetime.now, blank=True)
+                                       auto_now_add=True, blank=True)
     create_user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -103,7 +102,7 @@ class PostComment(models.Model):
     website = models.CharField(_('Website'), max_length=100, blank=True,
                                null=True)
     message = models.TextField(_('Message'), null=False)
-    create_date = models.DateTimeField(_('Create Date'), default=datetime.now,
+    create_date = models.DateTimeField(_('Create Date'), auto_now_add=True,
                                        null=False)
     is_published = models.BooleanField(_('Is published!'), default=False,
                                        null=False)
@@ -187,7 +186,7 @@ class Gallery(models.Model):
         _('Photo'), upload_to='photo/gallery/', null=False)
     is_published = models.BooleanField(_('Is Published!'),
                                        default=True, null=False)
-    create_date = models.DateTimeField(_('Create Date'), default=datetime.now,
+    create_date = models.DateTimeField(_('Create Date'), auto_now_add=True,
                                        null=False)
 
 
@@ -228,8 +227,7 @@ class ReuestForQuote(models.Model):
                              null=False, blank=False)
     message = models.TextField(_('Message'), null=False)
     is_done = models.BooleanField(_('Is done?!'), default=False)
-    create_date = models.DateTimeField(_('Create Date'), default=datetime.now,
-                                       null=False)
+    create_date = models.DateTimeField(_('Create Date'), auto_now_add=True,)
 
 
 class Message(models.Model):
@@ -241,5 +239,4 @@ class Message(models.Model):
                               null=True, max_length=100)
     subject = models.CharField(_('Subject'), max_length=150, null=False)
     message = models.TextField(_('Message'), null=False)
-    create_date = models.DateTimeField(_('Create Date'), default=datetime.now,
-                                       null=False)
+    create_date = models.DateTimeField(_('Create Date'), auto_now_add=True,)
