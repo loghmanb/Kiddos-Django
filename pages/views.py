@@ -41,6 +41,18 @@ def render(request, template, data=None):
 
 
 def index(request):
+    """
+    Display home page.
+
+    **Context**
+
+    ``sample_courses``
+        An instance of :model:`pages.Course`.
+
+    **Template:**
+
+    :template:`pages/index.html`
+    """
     data = services.get_website_settings()
     fast_links = models.Page.objects.filter(publish_on_index=True,
                                             is_published=True)
