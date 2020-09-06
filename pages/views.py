@@ -26,7 +26,6 @@ from django.core.mail import send_mail
 from django.db.models import Q
 
 from . import models, services, forms
-from .consts import SETTINGS_ABOUT_ARTICLE
 
 NO_PER_PAGE = 6
 
@@ -78,15 +77,6 @@ def index(request):
         'gallery': gallery,
     })
     return _render(request, 'pages/index.html', data)
-
-
-@require_safe
-def about(request):
-    data = services.get_website_settings()
-    if data[SETTINGS_ABOUT_ARTICLE]:
-        data['article'] = models.Page.objects.get(
-            pk=data[SETTINGS_ABOUT_ARTICLE])
-    return _render(request, 'pages/about.html', data)
 
 
 def blog(request):

@@ -20,6 +20,9 @@
 ##############################################################################
 
 from django import forms
+from django.views.generic.base import TemplateView
+
+from . import consts, models, services
 
 
 class BaseForm(forms.Form):
@@ -54,3 +57,14 @@ class PostReplyForm(forms.Form):
     email = forms.EmailField()
     website = forms.URLField(required=False)
     message = forms.Textarea()
+
+
+class AboutPage(TemplateView):
+    template_name = 'pages/about.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(services.get_website_settings())
+        context.update(article=models.Page.objects.get(
+            pk=context[consts.SETTINGS_ABOUT_ARTICLE]))
+        return context

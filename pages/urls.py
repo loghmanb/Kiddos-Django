@@ -21,11 +21,11 @@
 
 from django.urls import path
 
-from . import views
+from . import views, forms
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('about', views.about, name='about'),
+    path('about', forms.AboutPage.as_view(), name='about'),
     path('blog', views.blog, name='blog'),
     path('blog/<int:id>', views.blog_single, name='blog-single'),
     path('page/<int:id>', views.page, name='page'),
