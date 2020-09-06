@@ -102,6 +102,10 @@ class BlogPost(models.Model):
     def __str__(self):
         return '%s [written by %s]' % (self.title, self.create_user)
 
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('blog-single', args=[str(self.id)])
+
 
 class PostComment(models.Model):
     """
