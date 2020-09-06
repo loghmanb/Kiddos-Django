@@ -25,7 +25,7 @@ from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.db.models import Q
 
-from . import models, services, forms
+from . import consts, models, services, forms
 
 NO_PER_PAGE = 6
 
@@ -63,9 +63,9 @@ def index(request):
     teachers = models.Teacher.objects.filter(publish_on_index=True)
     pricing_plans = models.PricingPlan.objects.all()
     gallery = models.Gallery.objects.filter(is_published=True)
-    if data[SETTINGS_ABOUT_ARTICLE]:
+    if data[consts.SETTINGS_ABOUT_ARTICLE]:
         data['article'] = models.Page.objects.get(
-            pk=data[SETTINGS_ABOUT_ARTICLE])
+            pk=data[consts.SETTINGS_ABOUT_ARTICLE])
     data.update({
         'fast_links': fast_links,
         'endorsements': endorsements,
