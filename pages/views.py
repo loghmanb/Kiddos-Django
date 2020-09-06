@@ -20,12 +20,12 @@
 ##############################################################################
 
 from django.shortcuts import get_object_or_404, redirect, render as _render
+from django.views.decorators.http import require_safe
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.db.models import Q
 
-from . import models
-from . import services
+from . import models, services, forms
 from .consts import SETTINGS_ABOUT_ARTICLE
 
 NO_PER_PAGE = 6
@@ -57,7 +57,8 @@ def index(request):
     fast_links = models.Page.objects.filter(publish_on_index=True,
                                             is_published=True)
     endorsements = models.Endorsement.objects.filter(is_published=True)
-    recent_blog_posts = models.BlogPost.objects.filter(is_published=True)[:3]
+    recent_blog_posts = models.BlogPost.objects.filter(
+        is_published=True).defer('body')[:3]
     sample_courses = models.Course.objects.filter(active=True)[:4]
     courses = models.Course.objects.filter(active=True)
     teachers = models.Teacher.objects.filter(publish_on_index=True)
@@ -79,6 +80,7 @@ def index(request):
     return _render(request, 'pages/index.html', data)
 
 
+@require_safe
 def about(request):
     data = services.get_website_settings()
     if data[SETTINGS_ABOUT_ARTICLE]:
@@ -89,7 +91,7 @@ def about(request):
 
 def blog(request):
     blog_posts = models.BlogPost.objects.filter(
-        is_published=True)
+        is_published=True).defer('body')
     search = request.POST and request.POST.get('search')
     if search:
         blog_posts = blog_posts.filter(
@@ -113,15 +115,16 @@ def blog_single(request, id):
     blog_post = get_object_or_404(models.BlogPost, pk=id)
     data = {'blog_post': blog_post}
     if request.POST:
-        comment = models.PostComment(
-            name=request.POST['name'],
-            email=request.POST['email'],
-            website=request.POST['website'],
-            message=request.POST['message'],
-            blog_post=blog_post,
-        )
-        comment.save()
-        data['comment'] = 'recieved'
+        form = forms.MessageForm(request.POST)
+        if form.is_valid():
+            comment = models.PostComment(
+                **dict(form.cleaned_data, blog_post=blog_post)
+            )
+            comment.save()
+            data['comment'] = 'recieved'
+    else:
+        form = forms.MessageForm()
+    data['form'] = form
     return render(request, 'pages/blog-single.html', data)
 
 

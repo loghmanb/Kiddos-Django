@@ -22,18 +22,27 @@
 from django import forms
 
 
+class BaseForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(BaseForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+
+
 class RequestForQuoteForm(forms.Form):
-    first_name = forms.CharField()
-    last_name = forms.CharField()
-    phone = forms.CharField()
-    message = forms.Textarea(required=False)
-
-
-class MessageForm(forms.Form):
-    name = forms.CharField()
-    email = forms.EmailField()
-    subject = forms.CharField()
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
+    phone = forms.CharField(required=True)
     message = forms.Textarea()
+
+
+class MessageForm(BaseForm):
+    name = forms.CharField(required=True)
+    email = forms.EmailField(required=True)
+    website = forms.CharField(required=False)
+    message = forms.CharField(required=False,
+                              widget=forms.Textarea(
+                                  attrs={'rows': 10, 'cols': 30}))
 
 
 class SubscriptionForm(forms.Form):
