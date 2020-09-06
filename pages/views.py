@@ -104,31 +104,28 @@ def blog(request):
 def blog_single(request, id):
     blog_post = get_object_or_404(models.BlogPost, pk=id)
     data = {'blog_post': blog_post}
+    form = forms.PostReplyForm(request.POST or None)
     if request.POST:
-        form = forms.MessageForm(request.POST)
         if form.is_valid():
             comment = models.PostComment(
                 **dict(form.cleaned_data, blog_post=blog_post)
             )
             comment.save()
             data['comment'] = 'recieved'
-    else:
-        form = forms.MessageForm()
     data['form'] = form
     return render(request, 'pages/blog-single.html', data)
 
 
 def contact(request):
     data = {}
+    form = forms.MessageForm(request.POST or None)
     if request.POST:
-        message = models.Message(
-            full_name=request.POST['full_name'],
-            email=request.POST['email'],
-            subject=request.POST['subject'],
-            message=request.POST['full_name'],
-        )
-        message.save()
-        data['status'] = 'recieved'
+        if form.is_valid():
+            message = models.Message(
+                **form.cleaned_data)
+            message.save()
+            data['status'] = 'recieved'
+    data['form'] = form
     return render(request, 'pages/contact.html', data)
 
 

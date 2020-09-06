@@ -40,12 +40,12 @@ class RequestForQuoteForm(forms.Form):
 
 
 class MessageForm(BaseForm):
-    name = forms.CharField(required=True)
+    subject = forms.CharField(required=True)
+    full_name = forms.CharField(required=True)
     email = forms.EmailField(required=True)
-    website = forms.CharField(required=False)
-    message = forms.CharField(required=False,
+    message = forms.CharField(required=True,
                               widget=forms.Textarea(
-                                  attrs={'rows': 10, 'cols': 30}))
+                                  attrs={'rows': 7, 'cols': 30}))
 
 
 class SubscriptionForm(forms.Form):
@@ -53,10 +53,12 @@ class SubscriptionForm(forms.Form):
 
 
 class PostReplyForm(forms.Form):
-    name = forms.CharField()
-    email = forms.EmailField()
+    name = forms.CharField(required=True)
+    email = forms.EmailField(required=True)
     website = forms.URLField(required=False)
-    message = forms.Textarea()
+    message = forms.CharField(required=False,
+                              widget=forms.Textarea(
+                                  attrs={'rows': 10, 'cols': 30}))
 
 
 class AboutPage(TemplateView):
