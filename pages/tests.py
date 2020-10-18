@@ -53,4 +53,4 @@ class KiddosTestCase(TestCase):
         blog_post = BlogPost.objects.get(title="Test post")
         comments = PostComment.objects.filter(blog_post__id=blog_post.id,
                                               is_published=True)
-        self.assertEqual(blog_post.published_comments, comments)
+        self.assertEqual(list(blog_post.published_comments), list(comments))
