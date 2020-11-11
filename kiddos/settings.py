@@ -43,9 +43,16 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'rest_framework',
     'knox',
+    'django_elasticsearch_dsl',
     'pages.apps.PagesConfig',
     'frontend.apps.FrontendConfig',
 ]
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': '127.0.0.1:9200'
+    }
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
