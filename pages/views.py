@@ -84,12 +84,21 @@ def blog(request):
         is_published=True).defer('body')
     search = request.POST and request.POST.get('search')
     if search:
+        '''
         blog_posts = blog_posts.filter(
             Q(title__icontains=search)
             | Q(short_desc__icontains=search)
             | Q(body__icontains=search)
         )
-    paginator = Paginator(blog_posts, NO_PER_PAGE)
+        '''
+        from .documents import BlogPostDocument
+        from .utils import DSEPaginator
+        blog_posts = BlogPostDocument.search().query('match', title=search).execute()
+        paginator = DSEPaginator(blog_posts, NO_PER_PAGE)
+    else:
+        paginator = Paginator(blog_posts, NO_PER_PAGE)
+
+
     page = int(request.GET.get('page', 1))
     pages = range(max(1, page-2), min(page+2, paginator.num_pages)+1)
     return render(request, 'pages/blog.html', {
