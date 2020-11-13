@@ -92,13 +92,14 @@ def blog(request):
         )
         '''
         from .documents import BlogPostDocument
-        from .utils import DSEPaginator
-        blog_posts = BlogPostDocument.search().query('match', title=search).execute()
-        paginator = DSEPaginator(blog_posts, NO_PER_PAGE)
+        from elasticsearch_dsl import Q as _Q
+        blog_posts = BlogPostDocument.search().query(
+            _Q('multi_match', query=search,
+               fields=['title', 'short_desc', 'body', 'tags'])
+        ).to_queryset()
     else:
-        paginator = Paginator(blog_posts, NO_PER_PAGE)
-
-
+        search = ''
+    paginator = Paginator(blog_posts, NO_PER_PAGE)
     page = int(request.GET.get('page', 1))
     pages = range(max(1, page-2), min(page+2, paginator.num_pages)+1)
     return render(request, 'pages/blog.html', {
