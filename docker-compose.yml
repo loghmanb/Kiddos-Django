@@ -1,10 +1,18 @@
-version: '3'
+version: '3.4'
 
 services:
-    web:
-        build: .
-        command: python manage.py runserver 0.0.0.0:8000
-        volumes:
-            - .:/code
-        ports:
-            - "8000:8000"
+  python: #docker run -it -v ${PWD}:/work -w /work -p 8000:8000 aimvector/python:1.0.0 /bin/sh
+    container_name: python
+    image: aimvector/python:1.0.0
+    build:
+      context: .
+      target: debug
+    #working_dir: /code      #comment out for build.target:prod
+    #entrypoint: /bin/sh     #comment out for build.target:prod
+    #stdin_open: true        #comment out for build.target:prod
+    #tty: true               #comment out for build.target:prod
+    volumes:
+    - .:/code
+    ports:
+      - 8000:8000
+      - 5678:5678
