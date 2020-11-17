@@ -22,13 +22,12 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '!mgfrhf5xy9v0$w0ks^x*z%_63bms_6$+$oo@h2cx*nj)r2-bz'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get('DEBUG', True))
 
-ALLOWED_HOSTS = ['127.0.0.1', 'loghman.pythonanywhere.com']
-
+ALLOWED_HOSTS = 'ALLOWED_HOSTS' in os.environ and os.environ['ALLOWED_HOSTS'].split(',') or []
 
 # Application definition
 
@@ -43,16 +42,19 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'rest_framework',
     'knox',
-    'django_elasticsearch_dsl',
     'pages.apps.PagesConfig',
     'frontend.apps.FrontendConfig',
 ]
 
-ELASTICSEARCH_DSL = {
-    'default': {
-        'hosts': '127.0.0.1:9200'
+ELASTICSEARCH_DSL = {}
+
+if bool(os.environ.get('ELASTIC_SEARCH', False)):
+    INSTALLED_APPS.append('django_elasticsearch_dsl')
+    ELASTICSEARCH_DSL = {
+        'default': {
+            'hosts': '127.0.0.1:9200'
+        }
     }
-}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -163,8 +165,8 @@ MESSAGE_TAGS = {
 }
 
 # Email config
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_USE_TLS = True
+EMAIL_HOST = os.environ.get('EMAIL_HOST', '')
+EMAIL_PORT = os.environ.get('EMAIL_PORT', 587)
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+EMAIL_USE_TLS = bool(os.environ.get('EMAIL_USE_TLS', True))
