@@ -48,7 +48,7 @@ INSTALLED_APPS = [
 
 ELASTICSEARCH_DSL = {}
 
-if bool(os.environ.get('ELASTIC_SEARCH', False)):
+if bool(os.getenv('ELASTIC_SEARCH', False)):
     INSTALLED_APPS.append('django_elasticsearch_dsl')
     ELASTICSEARCH_DSL = {
         'default': {
@@ -165,8 +165,8 @@ MESSAGE_TAGS = {
 }
 
 # Email config
-EMAIL_HOST = os.environ.get('EMAIL_HOST', '')
-EMAIL_PORT = os.environ.get('EMAIL_PORT', 587)
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
-EMAIL_USE_TLS = bool(os.environ.get('EMAIL_USE_TLS', True))
+EMAIL_HOST = os.getenv('EMAIL_HOST', '')
+EMAIL_PORT = os.getenv('EMAIL_PORT', 587)
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
+EMAIL_USE_TLS = bool(os.getenv('EMAIL_USE_TLS', True))
