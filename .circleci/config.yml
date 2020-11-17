@@ -12,12 +12,8 @@ jobs:
       - python/install-deps
       - python/save-cache
       - run:
-          name: "echo secret key envioronment var in project settings"
-          command: |
-            echo $SECRET_KEY
-      - run:
-          command: python ./manage.py test
           name: Test
+          command: python ./manage.py test
 
 workflows:
   main:
