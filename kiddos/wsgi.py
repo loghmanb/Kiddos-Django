@@ -9,14 +9,12 @@ https://docs.djangoproject.com/en/3.1/howto/deployment/wsgi/
 
 import os
 
-from dotenv import load_dotenv
-
 from django.core.wsgi import get_wsgi_application
+
+from . import load_custom_environment_variables
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kiddos.settings')
 
-# load custom environment variables
-project_folder = os.path.expanduser('~/kiddos-django') 
-load_dotenv(os.path.join(project_folder, '.env'))
+load_custom_environment_variables()
 
 application = get_wsgi_application()
