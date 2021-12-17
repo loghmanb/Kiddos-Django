@@ -37,4 +37,6 @@ urlpatterns = [
     path('teachers/<int:id>', views.teacher, name='teacher'),
     path('request-a-quote', views.request_a_quote, name='request-for-quote'),
     path('subscribe-me', views.subscribe_me, name='subscribe-me'),
+    path('custom-form-data/<form_name>/<int:id>',
+         views.custom_form_data, name='custom-form-data')
 ]

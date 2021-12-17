@@ -1,0 +1,5 @@
+{% load static %}
+
+{% if edit_mode %}
+<b><a href="{% url 'custom-form-data' form_name record_id %}">Edit</a></b>
+{% endif %}

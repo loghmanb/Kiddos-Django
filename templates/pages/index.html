@@ -1,19 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
+{% load dynamic_form %}
 {% block content %}
 
 {% if fast_links %}
 <section class="home-slider owl-carousel">
   {% for fast_link in fast_links %}
-  <div class="slider-item" style="background-image: url('{{ fast_link.image.url }}')">
+  <div class="slider-item" style="background-image: url('{{ fast_link.image_url }}')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row no-gutters slider-text align-items-center justify-content-center" data-scrollax-parent="true">
         <div class="col-md-8 text-center ftco-animate">
           <h1 class="mb-4">{{ fast_link.name | safe }}</h1>
           <p>
-            <a href="{% url 'page' fast_link.id %}" class="btn btn-secondary px-4 py-3 mt-3">Read More</a>
+            <a href="{% url 'page' fast_link.page_id %}" class="btn btn-secondary px-4 py-3 mt-3">Read More</a>
+            {% link_to_custom_form_data fast_link %}
           </p>
         </div>
       </div>
@@ -120,16 +122,19 @@
     </div>
     <div class="row">
       {% for teacher in teachers %}
+      {% if teacher.is_published and teacher.publish_on_index %}
       <div class="col-md-6 col-lg-3 ftco-animate">
         <div class="staff">
           <div class="img-wrap d-flex align-items-stretch">
-            <div class="img align-self-stretch" style="background-image: url('{{ teacher.photo.url }}');"></div>
+            <div class="img align-self-stretch" style="background-image: url('{{ teacher.photo }}');"></div>
           </div>
           <div class="text pt-3 text-center">
+            {% link_to_custom_form_data teacher %}
             <h3>{{ teacher.full_name }}</h3>
             <span class="position mb-2">{{ teacher.position }}</span>
             <div class="faded">
-              <p>{{ teacher.short_desc }}</p>
+              <p>{{ teacher.short_description }}</p>
+              {% if teacher.mobile %}<p>Mobile: {{ teacher.mobile }}</p>{% endif %}
               <ul class="ftco-social text-center">
                 <li class="ftco-animate">
                   <a href="https://twitter.com/{{ teacher.twitter }}"><span class="icon-twitter"></span></a>
@@ -148,6 +153,7 @@
           </div>
         </div>
       </div>
+      {% endif %}
       {% endfor %}
     </div>
   </div>
@@ -163,16 +169,19 @@
     </div>
     <div class="row">
       {% for course in sample_courses %}
+      {% if course.active %}
       <div class="col-md-6 course d-lg-flex ftco-animate">
-        <div class="img" style="background-image: url('{{ course.image.url }}')"></div>
+        <div class="img" style="background-image: url('{{ course.image_url }}')"></div>
         <div class="text bg-light p-4">
+          {% link_to_custom_form_data course %}
           <h3><a href="{% url 'course' course.id %}">{{ course.name }}</a></h3>
           <p class="subheading">
             <span>Class time:</span> {{ course.class_time }}
           </p>
-          <p>{{ course.short_desc }}</p>
+          <p>{{ course.short_description }}</p>
         </div>
       </div>
+      {% endif %}
       {% endfor %}
     </div>
   </div>
@@ -193,44 +202,39 @@
     <div class="row d-md-flex align-items-center justify-content-center">
       <div class="col-lg-10">
         <div class="row d-md-flex align-items-center">
+          {% for our_experience in our_experiences %}
           <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
             <div class="block-18">
               <div class="icon"><span class="flaticon-doctor"></span></div>
               <div class="text">
-                <strong class="number" data-number="{{ settings_certified_teacher_count }}">0</strong>
-                <span>Certified Teachers</span>
+                <strong class="number" data-number="{{ our_experience.value }}">0</strong>
+                <span>{{ our_experience.title }}</span>
+                {% link_to_custom_form_data our_experience %}
               </div>
             </div>
           </div>
-          <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-            <div class="block-18">
-              <div class="icon"><span class="flaticon-doctor"></span></div>
-              <div class="text">
-                <strong class="number" data-number="{{ settings_successful_kids }}">0</strong>
-                <span>Successful Kids</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-            <div class="block-18">
-              <div class="icon"><span class="flaticon-doctor"></span></div>
-              <div class="text">
-                <strong class="number" data-number="{{ settings_happy_parents }}">0</strong>
-                <span>Happy Parents</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-            <div class="block-18">
-              <div class="icon"><span class="flaticon-doctor"></span></div>
-              <div class="text">
-                <strong class="number" data-number="{{ settings_awards_won }}">0</strong>
-                <span>Awards Won</span>
-              </div>
-            </div>
-          </div>
+          {% endfor %}
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="ftco-section testimony-section bg-light">
+  <div class="container">
+    <div class="row justify-content-center mb-5 pb-2">
+      <table style="border: 1px solid black">
+        {% for jv in hello_world %}
+        {% if jv.active %}
+        <tr>
+          <td>{{ jv.job_title }}</td>
+          <td>{{ jv.description }}</td>
+          <td>{{ jv.salary }}</td>
+          <td>{% link_to_custom_form_data jv %}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </table>
     </div>
   </div>
 </section>
@@ -250,7 +254,7 @@
           {% for endorsement in endorsements %}
           <div class="item">
             <div class="testimony-wrap d-flex">
-              <div class="user-img mr-4" style="background-image: url('{{ endorsement.photo.url }}')"></div>
+              <div class="user-img mr-4" style="background-image: url('{{ endorsement.photo_url }}')"></div>
               <div class="text ml-2 bg-light">
                 <span class="quote d-flex align-items-center justify-content-center">
                   <i class="icon-quote-left"></i>
@@ -258,6 +262,7 @@
                 <p>{{ endorsement.note }}</p>
                 <p class="name">{{ endorsement.person }}</p>
                 <span class="position">{{ endorsement.role }}</span>
+                <div>{% link_to_custom_form_data endorsement %}</div>
               </div>
             </div>
           </div>

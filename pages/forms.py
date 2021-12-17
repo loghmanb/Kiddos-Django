@@ -21,6 +21,7 @@
 
 from django import forms
 from django.views.generic.base import TemplateView
+from django.utils.translation import gettext as _
 
 from . import consts, models, services
 
@@ -59,6 +60,31 @@ class PostReplyForm(forms.Form):
     message = forms.CharField(required=False,
                               widget=forms.Textarea(
                                   attrs={'rows': 10, 'cols': 30}))
+
+
+def create_form_field(structure):
+    field_type = structure.pop('type')
+    if field_type == 'text':
+        structure['widget'] = forms.Textarea()
+    elif field_type == "bool":
+        structure['required'] = False
+    klass = {
+        'char': forms.CharField,
+        'choice': forms.ChoiceField,
+        'bool': forms.BooleanField,
+    }.get(field_type, forms.CharField)
+    return klass(**structure)
+
+
+class CustomFormData(forms.Form):
+    def __init__(self, custom_form_id, *args, **kwargs):
+        super(CustomFormData, self).__init__(*args, **kwargs)
+
+        custom_form = models.CustomForm.objects.get(pk=custom_form_id)
+
+        for field in custom_form.structure:
+            self.fields[field] = create_form_field(
+                custom_form.structure[field])
 
 
 class AboutPage(TemplateView):

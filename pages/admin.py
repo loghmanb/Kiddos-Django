@@ -148,3 +148,23 @@ class MessageAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Message, MessageAdmin)
+
+
+class CustomFormAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name',)
+    list_display_links = ('id', 'name')
+    search_fields = ('name',)
+    list_per_page = 25
+
+
+admin.site.register(models.CustomForm, CustomFormAdmin)
+
+
+class CustomFormDataAdmin(admin.ModelAdmin):
+    list_display = ('id', 'custom_form', 'list_order')
+    list_display_links = ('id', 'custom_form')
+    search_fields = ('custom_form',)
+    list_per_page = 25
+
+
+admin.site.register(models.CustomFormData, CustomFormDataAdmin)

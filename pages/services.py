@@ -19,6 +19,7 @@
 #
 ##############################################################################
 
+from typing import Any, Dict, List
 from .consts import *
 from . import models
 
@@ -58,3 +59,26 @@ def get_website_settings():
     data['latest_blog_posts'] = models.BlogPost.objects.order_by(
         '-create_date')[:2]
     return data
+
+
+def get_custom_form():
+    result: Dict[str, List[Dict[str, Any]]] = {}
+    custom_form_data = models.CustomFormData.objects.all().order_by("-list_order", "-id")
+    for record in custom_form_data:
+        form_name = record.custom_form.name.lower().replace(" ", "_")
+        if form_name not in result:
+            result[form_name] = []
+        data = CustomFormRecordData(
+            record.id, record.custom_form, record.data)
+        result[form_name].append(data)
+    return result
+
+
+class CustomFormRecordData:
+    def __init__(self, record_id: int, custom_form: models.CustomForm, data: Dict[str, Any]) -> None:
+        data['id'] = record_id
+        data['custom_form'] = custom_form
+        self._data = data
+
+    def __getattr__(self, name: str) -> Any:
+        return self._data.get(name)

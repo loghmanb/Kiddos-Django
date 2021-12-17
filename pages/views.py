@@ -18,6 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import json
 
 from django.shortcuts import get_object_or_404, redirect, render as _render
 from django.views.decorators.http import require_safe
@@ -52,9 +53,10 @@ def index(request):
 
     :template:`pages/index.html`
     """
-    data = services.get_website_settings()
-    fast_links = models.Page.objects.filter(publish_on_index=True,
-                                            is_published=True)
+    data = {"edit_mode": 'edit' in request.GET}
+    data.update(services.get_website_settings())
+    # fast_links = models.Page.objects.filter(publish_on_index=True,
+    #                                        is_published=True)
     endorsements = models.Endorsement.objects.filter(is_published=True)
     recent_blog_posts = models.BlogPost.objects.filter(
         is_published=True).defer('body')[:3]
@@ -67,7 +69,7 @@ def index(request):
         data['article'] = models.Page.objects.get(
             pk=data[consts.SETTINGS_ABOUT_ARTICLE])
     data.update({
-        'fast_links': fast_links,
+        # 'fast_links': fast_links,
         'endorsements': endorsements,
         'recent_blog_posts': recent_blog_posts,
         'sample_courses': sample_courses,
@@ -76,6 +78,7 @@ def index(request):
         'pricing_plans': pricing_plans,
         'gallery': gallery,
     })
+    data.update(services.get_custom_form())
     return _render(request, 'pages/index.html', data)
 
 
@@ -201,6 +204,22 @@ def request_a_quote(request):
         'first_name': request.POST['first_name'],
         'last_name': request.POST['last_name'],
     })
+
+
+def custom_form_data(request, form_name, id):
+    custom_form_data = get_object_or_404(models.CustomFormData, pk=id)
+    data = {'custom_form_data': custom_form_data}
+    data["custom_form"] = custom_form_data.custom_form
+    form = forms.CustomFormData(
+        custom_form_data.custom_form.id, request.POST or None)
+    if request.POST:
+        if form.is_valid():
+            custom_form_data.data = form.cleaned_data
+            custom_form_data.save()
+    else:
+        form.data = custom_form_data.data
+    data['form'] = form
+    return render(request, 'pages/custom-form-data.html', data)
 
 
 def page_not_found_404_error(request, exception=None,

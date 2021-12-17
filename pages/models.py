@@ -263,3 +263,23 @@ class Message(models.Model):
     subject = models.CharField(_('Subject'), max_length=150, null=False)
     message = models.TextField(_('Message'), null=False)
     create_date = models.DateTimeField(_('Create Date'), auto_now_add=True,)
+
+
+class CustomForm(models.Model):
+    class Meta:
+        db_table = 'kiddos_custom_form'
+
+    name = models.CharField(_('Name'), max_length=50, null=False)
+    structure = models.JSONField()
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class CustomFormData(models.Model):
+    class Meta:
+        db_table = 'kiddos_custom_form_data'
+
+    custom_form = models.ForeignKey(CustomForm, on_delete=models.CASCADE)
+    data = models.JSONField()
+    list_order = models.IntegerField()
