@@ -28,50 +28,20 @@
 <section class="ftco-services ftco-no-pb">
   <div class="container-wrap">
     <div class="row no-gutters">
-      <div class="col-md-3 d-flex services align-self-stretch pb-4 px-4 ftco-animate bg-primary">
+      {% for our_merit in our_merits %}
+      <div class="col-md-3 d-flex services align-self-stretch pb-4 px-4 ftco-animate {{ our_merit.style_class }}">
         <div class="media block-6 d-block text-center">
           <div class="icon d-flex justify-content-center align-items-center">
-            <span class="flaticon-teacher"></span>
+            <span class="{{ our_merit.icon_class }}"></span>
           </div>
           <div class="media-body p-2 mt-3">
-            <h3 class="heading">Certified Teachers</h3>
-            <p>{{ settings_certified_teacher_text }}</p>
+            <h3 class="heading">{{ our_merit.title }}</h3>
+            <p>{{ our_merit.description }}</p>
+            <p>{% link_to_custom_form_data our_merit %}</p>
           </div>
         </div>
       </div>
-      <div class="col-md-3 d-flex services align-self-stretch pb-4 px-4 ftco-animate bg-tertiary">
-        <div class="media block-6 d-block text-center">
-          <div class="icon d-flex justify-content-center align-items-center">
-            <span class="flaticon-reading"></span>
-          </div>
-          <div class="media-body p-2 mt-3">
-            <h3 class="heading">Special Education</h3>
-            <p>{{ settings_special_education_text }}</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 d-flex services align-self-stretch pb-4 px-4 ftco-animate bg-fifth">
-        <div class="media block-6 d-block text-center">
-          <div class="icon d-flex justify-content-center align-items-center">
-            <span class="flaticon-books"></span>
-          </div>
-          <div class="media-body p-2 mt-3">
-            <h3 class="heading">Book &amp; Library</h3>
-            <p>{{ settings_book_library_text }}</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 d-flex services align-self-stretch pb-4 px-4 ftco-animate bg-quarternary">
-        <div class="media block-6 d-block text-center">
-          <div class="icon d-flex justify-content-center align-items-center">
-            <span class="flaticon-diploma"></span>
-          </div>
-          <div class="media-body p-2 mt-3">
-            <h3 class="heading">Certification</h3>
-            <p>{{ settings_certification_text }}</p>
-          </div>
-        </div>
-      </div>
+      {% endfor %}
     </div>
   </div>
 </section>
@@ -216,25 +186,6 @@
           {% endfor %}
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<section class="ftco-section testimony-section bg-light">
-  <div class="container">
-    <div class="row justify-content-center mb-5 pb-2">
-      <table style="border: 1px solid black">
-        {% for jv in hello_world %}
-        {% if jv.active %}
-        <tr>
-          <td>{{ jv.job_title }}</td>
-          <td>{{ jv.description }}</td>
-          <td>{{ jv.salary }}</td>
-          <td>{% link_to_custom_form_data jv %}</td>
-        </tr>
-        {% endif %}
-        {% endfor %}
-      </table>
     </div>
   </div>
 </section>
