@@ -19,12 +19,11 @@
 #
 ##############################################################################
 
-from django.conf.urls import url
 from django.urls import path, include
 
 from .views import home, api_not_found
 
 urlpatterns = [
-    url('api/', include(('frontend.api.urls', 'api'), namespace="api")),
+    path('api/', include(('frontend.api.urls', 'api'), namespace="api")),
     path('', home),
 ]
