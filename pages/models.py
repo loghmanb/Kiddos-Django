@@ -26,6 +26,9 @@ from django.utils.translation import gettext_lazy as _
 from .utils import *
 
 
+class PageTemplate(models.Model):
+    name = models.CharField()
+
 class Setting(models.Model):
     class Meta:
         db_table = 'kiddos_settings'
