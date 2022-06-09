@@ -85,9 +85,15 @@ ROOT_URLCONF = 'kiddos.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
-        'APP_DIRS': True,
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
+        # 'APP_DIRS': True,
         'OPTIONS': {
+            'loaders': [
+                'pages.template_loader.Loader',
+                ('django.template.loaders.cached.Loader',
+                    ['django.template.loaders.filesystem.Loader', 
+                    'django.template.loaders.app_directories.Loader'],),
+                ],
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
