@@ -172,10 +172,16 @@ admin.site.register(models.CustomFormData, CustomFormDataAdmin)
 
 
 class ElementTemplateAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name',)
+    list_display = ('id', 'name', 'website')
     list_display_links = ('id', 'name')
     search_fields = ('name',)
     list_per_page = 25
 
 
 admin.site.register(models.ElementTemplate, ElementTemplateAdmin)
+
+
+class WebsiteAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+
+admin.site.register(models.Website, WebsiteAdmin)
