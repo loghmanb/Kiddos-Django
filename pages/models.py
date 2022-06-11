@@ -27,7 +27,7 @@ from .utils import *
 
 
 class ElementTemplate(models.Model):
-    name = models.CharField(max_length=30, blank=False, null=False)
+    name = models.CharField(max_length=30, blank=False, null=False, unique=True)
     structure = models.TextField(blank=False, null=False)
     
 class Setting(models.Model):
