@@ -182,6 +182,6 @@ admin.site.register(models.ElementTemplate, ElementTemplateAdmin)
 
 
 class WebsiteAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
+    list_display = ('id', 'name', 'subdomain')
 
 admin.site.register(models.Website, WebsiteAdmin)

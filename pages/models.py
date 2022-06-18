@@ -28,14 +28,18 @@ from .utils import *
 
 class Website(models.Model):
     name = models.CharField(max_length=30)
+    subdomain = models.CharField(max_length=20, null=False, unique=True)
 
     def __str__(self) -> str:
         return self.name
 
 class ElementTemplate(models.Model):
-    name = models.CharField(max_length=30, blank=False, null=False, unique=True)
+    name = models.CharField(max_length=30, blank=False, null=False)
     structure = models.TextField(blank=False, null=False)
     website = models.ForeignKey('Website', on_delete=models.CASCADE, null=True, blank=True)
+
+    class Meta:
+        unique_together = ('name', 'website')
 
 class Setting(models.Model):
     class Meta:
