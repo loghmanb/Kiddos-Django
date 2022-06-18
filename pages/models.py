@@ -26,10 +26,17 @@ from django.utils.translation import gettext_lazy as _
 from .utils import *
 
 
+class Website(models.Model):
+    name = models.CharField(max_length=30)
+
+    def __str__(self) -> str:
+        return self.name
+
 class ElementTemplate(models.Model):
     name = models.CharField(max_length=30, blank=False, null=False, unique=True)
     structure = models.TextField(blank=False, null=False)
-    
+    website = models.ForeignKey('Website', on_delete=models.CASCADE, null=True, blank=True)
+
 class Setting(models.Model):
     class Meta:
         db_table = 'kiddos_settings'
