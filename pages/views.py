@@ -25,6 +25,7 @@ from django.views.decorators.http import require_safe
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.db.models import Q
+from django.http import HttpResponse
 
 from . import consts, models, services, forms
 
@@ -206,18 +207,22 @@ def request_a_quote(request):
     })
 
 
+def custom_form_data_list(request, form_name):
+    return HttpResponse("Hello World!")
+
+
 def custom_form_data(request, form_name, id):
-    custom_form_data = get_object_or_404(models.CustomFormData, pk=id)
-    data = {'custom_form_data': custom_form_data}
-    data["custom_form"] = custom_form_data.custom_form
+    custom_form_data_record = get_object_or_404(models.CustomFormData, pk=id)
+    data = {'custom_form_data': custom_form_data_record}
+    data["custom_form"] = custom_form_data_record.custom_form
     form = forms.CustomFormData(
-        custom_form_data.custom_form.id, request.POST or None)
+        custom_form_data_record.custom_form.id, request.POST or None)
     if request.POST:
         if form.is_valid():
-            custom_form_data.data = form.cleaned_data
-            custom_form_data.save()
+            custom_form_data_record.data = form.cleaned_data
+            custom_form_data_record.save()
     else:
-        form.data = custom_form_data.data
+        form.data = custom_form_data_record.data
     data['form'] = form
     return render(request, 'pages/custom-form-data.html', data)
 
