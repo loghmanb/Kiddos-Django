@@ -38,3 +38,7 @@ def link_to_custom_form_data(context, custom_form_data):
         'record_id': custom_form_data.id,
         'edit_mode': 'edit' in context["request"].GET,
     }
+
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)

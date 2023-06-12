@@ -18,14 +18,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import json
 
+from typing import Any
 from django.shortcuts import get_object_or_404, redirect, render as _render
 from django.views.decorators.http import require_safe
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.db.models import Q
-from django.http import HttpResponse
+from django.template.response import TemplateResponse
 
 from . import consts, models, services, forms
 
@@ -208,7 +208,14 @@ def request_a_quote(request):
 
 
 def custom_form_data_list(request, form_name):
-    return HttpResponse("Hello World!")
+    custom_form = models.CustomForm.objects.get(name=form_name)
+    columns = list(custom_form.structure.keys())
+    rows = models.CustomFormData.objects.filter(custom_form_id=custom_form.id)
+    return TemplateResponse(request, 'pages/custom-form-data-list.html', 
+                            {
+                                'columns': columns, 
+                                'rows': rows
+                            })
 
 
 def custom_form_data(request, form_name, id):
