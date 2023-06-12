@@ -22,6 +22,7 @@
 from django import forms
 from django.views.generic.base import TemplateView
 from django.utils.translation import gettext as _
+from django.template.response import TemplateResponse
 
 from . import consts, models, services
 
