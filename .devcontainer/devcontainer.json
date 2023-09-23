@@ -1,0 +1,36 @@
+{
+    "image": "mcr.microsoft.com/devcontainers/universal:2",
+    "hostRequirements": {
+      "cpus": 2
+    },
+    "waitFor": "onCreateCommand",
+    "updateContentCommand": "",
+    "postCreateCommand": "",
+    "postAttachCommand": {
+    },
+    "customizations": {
+      "codespaces": {
+        "openFiles": [
+          "README.md"
+        ]
+      },
+      "vscode": {
+        "extensions": [
+          "ms-python.python",
+          "ms-python.pylint",
+          "chrismeyers.vscode-pretty-json",
+          "github.vscode-github-actions"
+        ]
+      }
+    },
+    "portsAttributes": {
+      "8000": {
+        "label": "Application",
+        "onAutoForward": "openPreview"
+      }
+    },
+    "forwardPorts": [
+      8000
+    ]
+}
+  
